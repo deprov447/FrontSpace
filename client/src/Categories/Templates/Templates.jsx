@@ -17,7 +17,6 @@ const Template = ({
         w="sm"
         mx="auto"
       >
-        {templateId}
         <Link to={`/template/${templateId}`}>
           <Box
             h={64}
