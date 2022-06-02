@@ -1,4 +1,5 @@
 import {
+  chakra,
   Flex,
   Box,
   FormControl,
@@ -12,9 +13,12 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  Center,
+  Divider,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import ThirdPartyLogin from './ThirdPartyLogin';
 
 export default function Signup({ closeSignup, openSignin }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -97,6 +101,10 @@ export default function Signup({ closeSignup, openSignin }) {
                   Sign In
                 </Button>
               </Text>
+            </Stack>
+            <Divider orientation="horizontal" />
+            <Stack>
+              <ThirdPartyLogin />
             </Stack>
           </Stack>
         </Box>

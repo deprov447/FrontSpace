@@ -11,7 +11,10 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  Divider,
+  Spacer,
 } from '@chakra-ui/react';
+import ThirdPartyLogin from './ThirdPartyLogin';
 
 export default function Signin({
   openForgotPassword,
@@ -23,8 +26,9 @@ export default function Signin({
       align={'center'}
       justify={'center'}
       bg={useColorModeValue('white', 'gray.800')}
+      minW
     >
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+      <Stack spacing={8} mx={'auto'} maxW={'lg'} minW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>Sign in</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
@@ -49,16 +53,22 @@ export default function Signin({
               >
                 <Checkbox>Remember me</Checkbox>
               </Stack>
-              <Button
-                bg={'blue.400'}
-                color={'white'}
-                _hover={{
-                  bg: 'blue.500',
-                }}
-              >
-                Sign in
-              </Button>
-              <Button onClick={openForgotPassword}>Forget Password ?</Button>
+              <Flex justifyContent={'space-between'}>
+                <Button
+                  flexGrow={1}
+                  bg={'blue.400'}
+                  color={'white'}
+                  _hover={{
+                    bg: 'blue.500',
+                  }}
+                >
+                  Sign in
+                </Button>
+                <Spacer />
+                <Button onClick={openForgotPassword} flexGrow={1}>
+                  Forget Password ?
+                </Button>
+              </Flex>
             </Stack>
             <Stack pt={6}>
               <Text align={'center'}>
@@ -74,6 +84,10 @@ export default function Signin({
                   Sign Up
                 </Button>
               </Text>
+            </Stack>
+            <Divider orientation="horizontal" />
+            <Stack>
+              <ThirdPartyLogin />
             </Stack>
           </Stack>
         </Box>
