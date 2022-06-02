@@ -4,6 +4,7 @@ import Homepage from './Homepage/Homepage';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import Categories from './Categories/Categories';
 import CategoriesPage from './Categories/CategoriesPage';
+import Form from './Categories/Templates/Form/Form';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/categories/:category_name" element={<CategoriesPage />} />
+        <Route path="/template/:templateId" element={<Form />} />
         <Route
           path="*"
           element={

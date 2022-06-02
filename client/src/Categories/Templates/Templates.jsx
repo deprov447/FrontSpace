@@ -2,7 +2,12 @@ import React from 'react';
 import { chakra, Box, Flex, useColorModeValue } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-const Template = ({ templateName, templateThumb, templatePreviewURL }) => {
+const Template = ({
+  templateName,
+  templateThumb,
+  templatePreviewURL,
+  templateId,
+}) => {
   return (
     <Flex p={50} w="full" alignItems="center" justifyContent="center">
       <Flex
@@ -12,7 +17,8 @@ const Template = ({ templateName, templateThumb, templatePreviewURL }) => {
         w="sm"
         mx="auto"
       >
-        <Link to="#">
+        {templateId}
+        <Link to={`/template/${templateId}`}>
           <Box
             h={64}
             w="full"
