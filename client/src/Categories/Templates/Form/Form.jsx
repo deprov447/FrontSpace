@@ -1,36 +1,16 @@
-import { useParams } from 'react-router-dom';
 import React from 'react';
 import {
   chakra,
   Box,
-  Flex,
   useColorModeValue,
   SimpleGrid,
   GridItem,
   Heading,
   Text,
   Stack,
-  FormControl,
-  FormLabel,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  FormHelperText,
-  Textarea,
-  Avatar,
-  Icon,
   Button,
-  VisuallyHidden,
-  Select,
-  Checkbox,
-  RadioGroup,
-  Radio,
   Container,
 } from '@chakra-ui/react';
-import { FaUser } from 'react-icons/fa';
-import TextInput from './TextInput';
-import LargeText from './LargeText';
-import ImageInput from './ImageInput';
 import FormParsed from './FormParsed';
 
 const templateFormElements = [
