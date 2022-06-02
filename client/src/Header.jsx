@@ -234,7 +234,7 @@ export default function Header() {
             justifyContent="space-between"
           >
             <Flex align="flex-start">
-              <Link href="/">
+              <Link to="/">
                 <HStack>
                   <SiPagekit />
                 </HStack>

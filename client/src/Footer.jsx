@@ -10,11 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 
-const SocialButton = ({
-  children,
-  label,
-  href,
-}) => {
+const SocialButton = ({ children, label, href }) => {
   return (
     <chakra.button
       bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
