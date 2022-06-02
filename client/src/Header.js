@@ -17,6 +17,9 @@ import {
   useColorMode,
   SimpleGrid,
   Stack,
+  Modal,
+  ModalOverlay,
+  ModalContent,
 } from '@chakra-ui/react';
 import { useViewportScroll } from 'framer-motion';
 
@@ -31,8 +34,27 @@ import {
 import { BsFillCameraVideoFill } from 'react-icons/bs';
 import { FaMoon, FaSun } from 'react-icons/fa';
 import { SiPagekit } from 'react-icons/si';
+import Signup from './Auth/Signup';
+import Signin from './Auth/Signin';
+import ForgotPassword from './Auth/ForgetPassword';
 
 export default function Header() {
+  const {
+    isOpen: isSignupOpen,
+    onOpen: onSignupOpen,
+    onClose: onSignupClose,
+  } = useDisclosure();
+  const {
+    isOpen: isSigninOpen,
+    onOpen: onSigninOpen,
+    onClose: onSigninClose,
+  } = useDisclosure();
+  const {
+    isOpen: isForgotPasswordOpen,
+    onOpen: onForgotPasswordOpen,
+    onClose: onForgotPasswordClose,
+  } = useDisclosure();
+
   const { toggleColorMode: toggleMode } = useColorMode();
   const text = useColorModeValue('dark', 'light');
   const SwitchIcon = useColorModeValue(FaMoon, FaSun);
@@ -269,12 +291,56 @@ export default function Header() {
             </Flex>
             <Flex justify="flex-end" align="center" color="gray.400">
               <HStack spacing="5" display={{ base: 'none', md: 'flex' }}>
-                <Button colorScheme="brand" variant="ghost" size="sm">
-                  Sign in
-                </Button>
-                <Button colorScheme="brand" variant="solid" size="sm">
+                <Button variant="solid" onClick={onSignupOpen} size="sm">
                   Sign up
                 </Button>
+                <Modal
+                  isOpen={isSignupOpen}
+                  onClose={onSignupClose}
+                  blockScrollOnMount={false}
+                  isCentered
+                  size="lg"
+                >
+                  <ModalOverlay />
+                  <ModalContent>
+                    <Signup
+                      closeSignup={onSignupClose}
+                      openSignin={onSigninOpen}
+                    />
+                  </ModalContent>
+                </Modal>
+                <Button variant="solid" onClick={onSigninOpen} size="sm">
+                  Sign in
+                </Button>
+                <Modal
+                  isOpen={isSigninOpen}
+                  onClose={onSigninClose}
+                  blockScrollOnMount={false}
+                  isCentered
+                  size="lg"
+                >
+                  <ModalOverlay />
+                  <ModalContent>
+                    <Signin
+                      openForgotPassword={onForgotPasswordOpen}
+                      closeSignin={onSigninClose}
+                      openSignup={onSignupOpen}
+                    />
+                  </ModalContent>
+                </Modal>
+
+                <Modal
+                  isOpen={isForgotPasswordOpen}
+                  onClose={onForgotPasswordClose}
+                  blockScrollOnMount={false}
+                  isCentered
+                  size="lg"
+                >
+                  <ModalOverlay />
+                  <ModalContent>
+                    <ForgotPassword />
+                  </ModalContent>
+                </Modal>
               </HStack>
               <IconButton
                 size="md"
