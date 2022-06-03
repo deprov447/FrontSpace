@@ -10,8 +10,29 @@ import {
   Stack,
   Button,
   Container,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  HStack,
+  IconButton,
+  Input,
+  InputGroup,
+  InputRightElement,
 } from '@chakra-ui/react';
 import FormParsed from './FormParsed';
+import {
+  FaFacebook,
+  FaLinkedin,
+  FaReddit,
+  FaShare,
+  FaTwitter,
+  FaWhatsapp,
+} from 'react-icons/fa';
 
 const templateFormElements = [
   {
@@ -45,6 +66,7 @@ const templateFormElements = [
 ];
 
 export default function Component() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Container maxW="80vw">
       <Box bg={useColorModeValue('gray.50', 'inherit')} p={10}>
@@ -91,9 +113,107 @@ export default function Component() {
                   bg={useColorModeValue('gray.50', 'gray.900')}
                   textAlign="right"
                 >
-                  <Button type="submit" _focus={{ shadow: '' }} fontWeight="md">
+                  <Button
+                    // type="submit"
+                    _focus={{ shadow: '' }}
+                    fontWeight="md"
+                    onClick={onOpen}
+                  >
                     Save
                   </Button>
+
+                  <Modal isOpen={isOpen} onClose={onClose}>
+                    <ModalOverlay />
+                    <ModalContent>
+                      <ModalHeader>Your Page Is Ready</ModalHeader>
+                      <ModalCloseButton />
+                      <ModalBody>
+                        <Box
+                          mx="auto"
+                          textAlign={{ base: 'left', md: 'center' }}
+                        >
+                          <Box w="full" px={[10, , 4]} mx="auto">
+                            <Text
+                              mb={2}
+                              fontSize="xl"
+                              fontWeight="bold"
+                              lineHeight="tight"
+                              bgGradient="linear(to-r, brand.300, brand.600)"
+                            >
+                              Share to your socials !!!
+                            </Text>
+                            <chakra.p
+                              mb={6}
+                              fontSize={['lg', , 'xl']}
+                              color={useColorModeValue('gray.600', 'gray.400')}
+                            >
+                              Tell everyone about your new FirstPage
+                            </chakra.p>
+
+                            <InputGroup size="md">
+                              <Input
+                                mb={6}
+                                value={'hello'}
+                                colorScheme="teal"
+                                id="resultLink"
+                                variant="outline"
+                                leftIcon={<FaShare />}
+                                disabled
+                              />
+                              <InputRightElement width="4.5rem">
+                                <Button
+                                  h="1.75rem"
+                                  size="sm"
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(
+                                      document.getElementById('resultLink')
+                                        .value
+                                    );
+                                  }}
+                                >
+                                  Copy Link
+                                </Button>
+                              </InputRightElement>
+                            </InputGroup>
+
+                            <HStack justify={'center'}>
+                              <IconButton
+                                colorScheme="facebook"
+                                icon={<FaFacebook />}
+                                fontSize={25}
+                              />
+                              <IconButton
+                                colorScheme="twitter"
+                                icon={<FaTwitter />}
+                                fontSize={25}
+                              />
+                              <IconButton
+                                colorScheme="whatsapp"
+                                icon={<FaWhatsapp />}
+                                fontSize={25}
+                              />
+                              <IconButton
+                                colorScheme="red"
+                                icon={<FaReddit />}
+                                fontSize={25}
+                              />
+                              <IconButton
+                                colorScheme="linkedin"
+                                icon={<FaLinkedin />}
+                                fontSize={25}
+                              />
+                            </HStack>
+                          </Box>
+                        </Box>
+                      </ModalBody>
+
+                      <ModalFooter>
+                        <Button colorScheme="blue" mr={3} onClick={onClose}>
+                          Close
+                        </Button>
+                      </ModalFooter>
+                    </ModalContent>
+                  </Modal>
                 </Box>
               </chakra.form>
             </GridItem>
