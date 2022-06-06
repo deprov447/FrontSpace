@@ -1,0 +1,9 @@
+ports:
+  - port: 3000
+    visibility: private
+  - port: 4000
+    visibility: private
+vscode:
+  extensions:
+    - "esbenp.prettier-vscode"
+    - "dbaeumer.vscode-eslint"
