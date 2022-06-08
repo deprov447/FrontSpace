@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   chakra,
   Box,
@@ -33,39 +33,23 @@ import {
   FaTwitter,
   FaWhatsapp,
 } from 'react-icons/fa';
-
-const templateFormElements = [
-  {
-    field: 'Full Name',
-    type: 'text',
-  },
-  {
-    field: 'Welcome Text',
-    type: 'text',
-  },
-  {
-    field: 'About',
-    type: 'largeText',
-  },
-  {
-    field: 'LinkedIn URL',
-    type: 'text',
-  },
-  {
-    field: 'Github URL',
-    type: 'text',
-  },
-  {
-    field: 'Website',
-    type: 'text',
-  },
-  {
-    field: 'Profile Pic',
-    type: 'image',
-  },
-];
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 export default function Component() {
+  const { templateId } = useParams();
+  const [templateFormElements, setTemplateFormElements] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_SERVER_URL}/template/${templateId}`)
+      .then(res => {
+        setTemplateFormElements(res.data.templateFormElements);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  });
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Container maxW="80vw">
