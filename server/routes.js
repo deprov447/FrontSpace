@@ -6,6 +6,6 @@ const router = express();
 
 router.get("/categories", fetchCategoriesList);
 router.get("/categories/:category_name", fetchTemplatesList);
-router.get("/templates/:template_name", fetchTemplateForm);
+router.get("/template/:template_name", fetchTemplateForm);
 
 module.exports = router;
