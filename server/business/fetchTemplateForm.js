@@ -1,7 +1,7 @@
-const Templates = require("../models/Templates")
+const Templates = require("../models/Templates");
 
 module.exports = async (req, res) => {
-  const template_name = req.params.template_name;
-  const templateObj = await Templates.findById(template_name);
+  const template_id = req.params.template_id;
+  const templateObj = await Templates.findById(template_id);
   res.json(templateObj);
 };

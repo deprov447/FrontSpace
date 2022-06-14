@@ -4,12 +4,15 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
-
 const router = require("./routes");
 const app = express();
-app.use(cors({
-  corsOrigin: process.env.CLIENT_URL
-}));
+app.use(
+  cors({
+    corsOrigin: process.env.CLIENT_URL,
+  })
+);
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 dotenv.config();
 
 const PORT = 4000;
