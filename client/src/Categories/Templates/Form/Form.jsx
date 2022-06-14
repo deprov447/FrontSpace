@@ -38,17 +38,33 @@ import { useParams } from 'react-router-dom';
 
 export default function Component() {
   const { templateId } = useParams();
+
   const [templateFormElements, setTemplateFormElements] = useState([]);
+  const [formState, setFormState] = useState([]);
+
+  const submitHandler = e => {
+    e.preventDefault();
+    console.log(formState);
+    // make a axios post req with formstate
+  };
+
+  const changeFormState = (field, value) => {
+    setFormState(prevFormState => {
+      prevFormState[field] = value;
+      return prevFormState;
+    });
+  };
+
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_SERVER_URL}/template/${templateId}`)
       .then(res => {
-        setTemplateFormElements(res.data.templateFormElements);
+        setTemplateFormElements(() => res.data.templateFormElements);
       })
       .catch(err => {
         console.error(err);
       });
-  });
+  }, []);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -78,6 +94,7 @@ export default function Component() {
             <GridItem mt={[5, null, 0]} colSpan={{ md: 2 }}>
               <chakra.form
                 method="POST"
+                onSubmit={submitHandler}
                 shadow="base"
                 rounded={[null, 'md']}
                 overflow={{ sm: 'hidden' }}
@@ -89,7 +106,10 @@ export default function Component() {
                   spacing={6}
                   p={{ sm: 6 }}
                 >
-                  <FormParsed templateFormElements={templateFormElements} />
+                  <FormParsed
+                    templateFormElements={templateFormElements}
+                    changeFormState={changeFormState}
+                  />
                 </Stack>
                 <Box
                   px={{ base: 4, sm: 6 }}
@@ -98,7 +118,7 @@ export default function Component() {
                   textAlign="right"
                 >
                   <Button
-                    // type="submit"
+                    type="submit"
                     _focus={{ shadow: '' }}
                     fontWeight="md"
                     onClick={onOpen}

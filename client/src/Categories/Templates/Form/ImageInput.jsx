@@ -10,7 +10,11 @@ import {
   VisuallyHidden,
 } from '@chakra-ui/react';
 
-const ImageInput = ({ field }) => {
+const ImageInput = ({ field, changeFormState }) => {
+  const handleChange = e => {
+    changeFormState(field, e.target.value);
+  };
+
   return (
     <FormControl>
       <FormLabel
@@ -66,7 +70,12 @@ const ImageInput = ({ field }) => {
             >
               <span>Upload a file</span>
               <VisuallyHidden>
-                <input id="file-upload" name="file-upload" type="file" />
+                <input
+                  id="file-upload"
+                  name="file-upload"
+                  type="file"
+                  onChange={handleChange}
+                />
               </VisuallyHidden>
             </chakra.label>
             <Text pl={1}>or drag and drop</Text>

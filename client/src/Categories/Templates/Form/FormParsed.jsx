@@ -2,13 +2,18 @@ import ImageInput from './ImageInput';
 import LargeText from './LargeText';
 import TextInput from './TextInput';
 
-const FormParsed = ({ templateFormElements }) => {
+const FormParsed = ({ templateFormElements, changeFormState }) => {
   return (
     <>
       {templateFormElements.map(({ field, type }) => {
-        if (type === 'text') return <TextInput field={field} />;
-        if (type === 'largeText') return <LargeText field={field} />;
-        if (type === 'image') return <ImageInput field={field} />;
+        let ret;
+        if (type === 'text')
+          ret = <TextInput field={field} changeFormState={changeFormState} />;
+        else if (type === 'largeText')
+          ret = <LargeText field={field} changeFormState={changeFormState} />;
+        else if (type === 'image')
+          ret = <ImageInput field={field} changeFormState={changeFormState} />;
+        return ret;
       })}
     </>
   );
