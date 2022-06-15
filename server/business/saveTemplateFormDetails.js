@@ -1,10 +1,15 @@
 const ejs = require("ejs");
+const Pages = require("../models/Pages");
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   const formData = req.body;
-  //   const ejsTemplate = "<h1>HELLO WORLD <%= people %></h1>";
-  //   res.send(ejs.render(ejsTemplate, formData));
-
-  //   console.log(html);
+  const templateId = req.params.template_id;
+  const subdomain = "sbdmn";
+  const page = new Pages({
+    formData,
+    templateId,
+    subdomain,
+  });
+  await page.save();
   res.sendStatus(201);
 };

@@ -40,17 +40,11 @@ export default function Component() {
   const { templateId } = useParams();
 
   const [templateFormElements, setTemplateFormElements] = useState([]);
-  const [formState, setFormState] = useState([]);
-
-  const submitHandler = e => {
-    e.preventDefault();
-    console.log(formState);
-    // make a axios post req with formstate
-  };
+  const [formState, setFormState] = useState({});
 
   const changeFormState = (field, value) => {
     setFormState(prevFormState => {
-      prevFormState[field] = value;
+      prevFormState[field.replace(/\s/g, '')] = value;
       return prevFormState;
     });
   };
@@ -67,6 +61,23 @@ export default function Component() {
   }, []);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const submitHandler = e => {
+    e.preventDefault();
+    axios
+      .post(
+        `${process.env.REACT_APP_SERVER_URL}/template/${templateId}`,
+        formState
+      )
+      .then(res => {
+        res.status === 201 ? onOpen() : alert('try again :/');
+      })
+      .catch(err => {
+        console.error(err);
+        alert('try again :/');
+      });
+  };
+
   return (
     <Container maxW="80vw">
       <Box bg={useColorModeValue('gray.50', 'inherit')} p={10}>
@@ -117,12 +128,7 @@ export default function Component() {
                   bg={useColorModeValue('gray.50', 'gray.900')}
                   textAlign="right"
                 >
-                  <Button
-                    type="submit"
-                    _focus={{ shadow: '' }}
-                    fontWeight="md"
-                    onClick={onOpen}
-                  >
+                  <Button type="submit" _focus={{ shadow: '' }} fontWeight="md">
                     Save
                   </Button>
 
