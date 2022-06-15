@@ -1,4 +1,3 @@
-const ejs = require("ejs");
 const Pages = require("../models/Pages");
 
 module.exports = async (req, res) => {
