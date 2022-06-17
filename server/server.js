@@ -20,12 +20,12 @@ express()
   .set("view engine", "ejs")
   .use(express.urlencoded({ extended: true }))
   .use(express.json())
-  .use(router)
   .use(
     cors({
       corsOrigin: process.env.CLIENT_URL,
     })
   )
+  .use(router)
   .listen(PORT, () => {
     console.log(`Server started on ${PORT}`);
   });

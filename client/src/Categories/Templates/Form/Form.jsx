@@ -58,7 +58,7 @@ export default function Component() {
       .catch(err => {
         console.error(err);
       });
-  }, []);
+  }, [templateId]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -142,7 +142,7 @@ export default function Component() {
                           mx="auto"
                           textAlign={{ base: 'left', md: 'center' }}
                         >
-                          <Box w="full" px={[10, , 4]} mx="auto">
+                          <Box w="full" px={[10, 3, 4]} mx="auto">
                             <Text
                               mb={2}
                               fontSize="xl"
@@ -150,11 +150,11 @@ export default function Component() {
                               lineHeight="tight"
                               bgGradient="linear(to-r, brand.300, brand.600)"
                             >
-                              Share to your socials !!!
+                              Share to your socials
                             </Text>
                             <chakra.p
                               mb={6}
-                              fontSize={['lg', , 'xl']}
+                              fontSize={['lg', 'lg', 'xl']}
                               color={useColorModeValue('gray.600', 'gray.400')}
                             >
                               Tell everyone about your new FirstPage

@@ -1,15 +1,10 @@
 import {
-  Avatar,
-  Button,
-  Flex,
   FormControl,
   FormLabel,
-  Icon,
   Input,
   InputGroup,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { FaUser } from 'react-icons/fa';
 
 const TextInput = ({ field, changeFormState }) => {
   const handleChange = e => {
