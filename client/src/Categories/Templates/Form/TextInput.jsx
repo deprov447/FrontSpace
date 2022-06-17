@@ -11,7 +11,11 @@ import {
 } from '@chakra-ui/react';
 import { FaUser } from 'react-icons/fa';
 
-const TextInput = ({ field }) => {
+const TextInput = ({ field, changeFormState }) => {
+  const handleChange = e => {
+    changeFormState(field, e.target.value);
+  };
+
   return (
     <>
       <FormControl>
@@ -23,7 +27,11 @@ const TextInput = ({ field }) => {
           {field}
         </FormLabel>
         <InputGroup size="sm">
-          <Input focusBorderColor="brand.400" rounded="md" />
+          <Input
+            focusBorderColor="brand.400"
+            rounded="md"
+            onChange={handleChange}
+          />
         </InputGroup>
       </FormControl>
     </>

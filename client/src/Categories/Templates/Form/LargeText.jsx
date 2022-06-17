@@ -5,7 +5,11 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
-const LargeText = ({ field }) => {
+const LargeText = ({ field, changeFormState }) => {
+  const handleChange = e => {
+    changeFormState(field, e.target.value);
+  };
+
   return (
     <FormControl id="email" mt={1}>
       <FormLabel
@@ -21,6 +25,7 @@ const LargeText = ({ field }) => {
         shadow="sm"
         focusBorderColor="brand.400"
         fontSize={{ sm: 'sm' }}
+        onChange={handleChange}
       />
     </FormControl>
   );

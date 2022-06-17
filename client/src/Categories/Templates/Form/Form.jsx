@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   chakra,
   Box,
@@ -33,40 +33,51 @@ import {
   FaTwitter,
   FaWhatsapp,
 } from 'react-icons/fa';
-
-const templateFormElements = [
-  {
-    field: 'Full Name',
-    type: 'text',
-  },
-  {
-    field: 'Welcome Text',
-    type: 'text',
-  },
-  {
-    field: 'About',
-    type: 'largeText',
-  },
-  {
-    field: 'LinkedIn URL',
-    type: 'text',
-  },
-  {
-    field: 'Github URL',
-    type: 'text',
-  },
-  {
-    field: 'Website',
-    type: 'text',
-  },
-  {
-    field: 'Profile Pic',
-    type: 'image',
-  },
-];
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 export default function Component() {
+  const { templateId } = useParams();
+
+  const [templateFormElements, setTemplateFormElements] = useState([]);
+  const [formState, setFormState] = useState({});
+
+  const changeFormState = (field, value) => {
+    setFormState(prevFormState => {
+      prevFormState[field.replace(/\s/g, '')] = value;
+      return prevFormState;
+    });
+  };
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_SERVER_URL}/template/${templateId}`)
+      .then(res => {
+        setTemplateFormElements(() => res.data.templateFormElements);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }, []);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const submitHandler = e => {
+    e.preventDefault();
+    axios
+      .post(
+        `${process.env.REACT_APP_SERVER_URL}/template/${templateId}`,
+        formState
+      )
+      .then(res => {
+        res.status === 201 ? onOpen() : alert('try again :/');
+      })
+      .catch(err => {
+        console.error(err);
+        alert('try again :/');
+      });
+  };
+
   return (
     <Container maxW="80vw">
       <Box bg={useColorModeValue('gray.50', 'inherit')} p={10}>
@@ -94,6 +105,7 @@ export default function Component() {
             <GridItem mt={[5, null, 0]} colSpan={{ md: 2 }}>
               <chakra.form
                 method="POST"
+                onSubmit={submitHandler}
                 shadow="base"
                 rounded={[null, 'md']}
                 overflow={{ sm: 'hidden' }}
@@ -105,7 +117,10 @@ export default function Component() {
                   spacing={6}
                   p={{ sm: 6 }}
                 >
-                  <FormParsed templateFormElements={templateFormElements} />
+                  <FormParsed
+                    templateFormElements={templateFormElements}
+                    changeFormState={changeFormState}
+                  />
                 </Stack>
                 <Box
                   px={{ base: 4, sm: 6 }}
@@ -113,12 +128,7 @@ export default function Component() {
                   bg={useColorModeValue('gray.50', 'gray.900')}
                   textAlign="right"
                 >
-                  <Button
-                    // type="submit"
-                    _focus={{ shadow: '' }}
-                    fontWeight="md"
-                    onClick={onOpen}
-                  >
+                  <Button type="submit" _focus={{ shadow: '' }} fontWeight="md">
                     Save
                   </Button>
 
