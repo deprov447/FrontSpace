@@ -6,10 +6,11 @@ const fetchTemplatesList = require("./business/fetchTemplatesList");
 const saveTemplateFormDetails = require("./business/saveTemplateFormDetails");
 const router = express();
 
-router.get("/categories", fetchCategoriesList);
-router.get("/categories/:category_name", fetchTemplatesList);
-router.get("/template/:template_id", fetchTemplateForm);
-router.post("/template/:template_id", saveTemplateFormDetails);
-router.get("/", fetchPage);
+router
+  .get("/categories", fetchCategoriesList)
+  .get("/categories/:category_name", fetchTemplatesList)
+  .get("/template/:template_id", fetchTemplateForm)
+  .post("/template/:template_id", saveTemplateFormDetails)
+  .get("/", fetchPage);
 
 module.exports = router;
