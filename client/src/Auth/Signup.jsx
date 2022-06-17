@@ -1,5 +1,4 @@
 import {
-  chakra,
   Flex,
   Box,
   FormControl,
@@ -13,7 +12,6 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  Center,
   Divider,
 } from '@chakra-ui/react';
 import { useState } from 'react';
