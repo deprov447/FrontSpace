@@ -14,6 +14,8 @@ import {
   Divider,
   Spacer,
 } from '@chakra-ui/react';
+// import axios from 'axios';
+import { useState } from 'react';
 import ThirdPartyLogin from './ThirdPartyLogin';
 
 export default function Signin({
@@ -21,6 +23,64 @@ export default function Signin({
   closeSignin,
   openSignup,
 }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = () => {
+    try {
+      fetch(`${process.env.REACT_APP_SERVER_URL}/signin/password`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      })
+        .then(async res => {
+          if (!res.ok) {
+            if (res.status === 400) {
+              console.log('Please fill all the fields correctly!');
+            } else if (res.status === 401) {
+              console.log('Invalid email and password combination.');
+            } else {
+              console.log('genericErrorMessage');
+            }
+          } else {
+            const data = await res.json();
+            // setUserContext(oldValues => {
+            //   return { ...oldValues, token: data.token }
+            // })
+            console.log(data);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      //   axios
+      //     .post(
+      //       `${process.env.REACT_APP_SERVER_URL}/signin/password`,
+      //       {
+      //         username,
+      //         password,
+      //       },
+      //       {
+      //         withCredentials: true,
+      //         headers: {
+      //           Accept: 'application/json',
+      //           'Content-Type': 'application/json',
+      //           'Access-Control-Allow-Credentials': true,
+      //         },
+      //       }
+      //     )
+      //     .then(res => {
+      //       console.log(res);
+      //       if (res.status === 202) {
+      //         closeSignin();
+      //       }
+      //     });
+    } catch (err) {
+      //   console.error(err);
+    }
+  };
+
   return (
     <Flex
       align={'center'}
@@ -37,13 +97,23 @@ export default function Signin({
         </Stack>
         <Box p={8}>
           <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+            <FormControl id="username">
+              <FormLabel>Username</FormLabel>
+              <Input
+                type="username"
+                onChange={e => {
+                  setUsername(e.target.value);
+                }}
+              />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
-              <Input type="password" />
+              <Input
+                type="password"
+                onChange={e => {
+                  setPassword(e.target.value);
+                }}
+              />
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -61,6 +131,7 @@ export default function Signin({
                   _hover={{
                     bg: 'blue.500',
                   }}
+                  onClick={handleSubmit}
                 >
                   Sign in
                 </Button>
