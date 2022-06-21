@@ -37,7 +37,7 @@ express()
   .use(cookieParser(process.env.COOKIE_SECRET))
   .use(
     cors({
-      corsOrigin: process.env.CLIENT_URL,
+      origin: process.env.CLIENT_URL,
       credentials: true,
     })
   )

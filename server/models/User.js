@@ -9,7 +9,10 @@ const Session = new mongoose.Schema({
 });
 
 const User = new mongoose.Schema({
+  firstname: String,
+  lastname: String,
   username: String,
+  email: String,
   authStrategy: {
     type: String,
     default: "local",

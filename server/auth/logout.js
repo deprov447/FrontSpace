@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const { COOKIE_OPTION } = require("./authenticate");
 
 const signout = (req, res, next) => {
   const { signedCookies = {} } = req;
@@ -18,7 +19,7 @@ const signout = (req, res, next) => {
           res.statusCode = 500;
           res.send(err);
         } else {
-          res.clearCookie("refreshToken", COOKIE_OPTIONS);
+          res.clearCookie("refreshToken", COOKIE_OPTION);
           res.send({ success: true });
         }
       });

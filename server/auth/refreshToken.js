@@ -5,7 +5,7 @@ const { getToken, getRefreshToken, COOKIE_OPTION } = require("./authenticate");
 const refreshToken = (req, res, next) => {
   const { signedCookies = {} } = req;
   const { refreshToken } = signedCookies;
-
+  console.log("reftoken");
   if (refreshToken) {
     try {
       const payload = jwt.verify(

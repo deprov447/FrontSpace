@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   chakra,
   HStack,
@@ -37,6 +37,11 @@ import { SiPagekit } from 'react-icons/si';
 import Signup from './Auth/Signup';
 import Signin from './Auth/Signin';
 import ForgotPassword from './Auth/ForgetPassword';
+import signoutHandler from './Auth/signout';
+import { UserContext } from './UserContext';
+import { useCallback } from 'react';
+import refreshToken from './Auth/refreshToken';
+import { useEffect } from 'react';
 
 export default function Header() {
   const {
@@ -54,6 +59,20 @@ export default function Header() {
     onOpen: onForgotPasswordOpen,
     onClose: onForgotPasswordClose,
   } = useDisclosure();
+
+  const [userContext, setUserContext] = useContext(UserContext);
+
+  const verifyUser = useCallback(() => {
+    const token = refreshToken();
+    setUserContext(prev => {
+      return { ...prev, token };
+    });
+    setTimeout(verifyUser, 5 * 60 * 1000);
+  }, [setUserContext]);
+
+  useEffect(() => {
+    verifyUser();
+  }, [verifyUser]);
 
   const { toggleColorMode: toggleMode } = useColorMode();
   const text = useColorModeValue('dark', 'light');
@@ -291,9 +310,27 @@ export default function Header() {
             </Flex>
             <Flex justify="flex-end" align="center" color="gray.400">
               <HStack spacing="5" display={{ base: 'none', md: 'flex' }}>
-                <Button variant="solid" onClick={onSignupOpen} size="sm">
-                  Sign up
-                </Button>
+                {userContext.token && (
+                  <Button
+                    variant="solid"
+                    onClick={() => {
+                      signoutHandler(userContext, setUserContext);
+                    }}
+                    size="sm"
+                  >
+                    Sign Out
+                  </Button>
+                )}
+                {!userContext.token && (
+                  <>
+                    <Button variant="solid" onClick={onSignupOpen} size="sm">
+                      Sign up
+                    </Button>
+                    <Button variant="solid" onClick={onSigninOpen} size="sm">
+                      Sign in
+                    </Button>
+                  </>
+                )}
                 <Modal
                   isOpen={isSignupOpen}
                   onClose={onSignupClose}
@@ -309,9 +346,6 @@ export default function Header() {
                     />
                   </ModalContent>
                 </Modal>
-                <Button variant="solid" onClick={onSigninOpen} size="sm">
-                  Sign in
-                </Button>
                 <Modal
                   isOpen={isSigninOpen}
                   onClose={onSigninClose}
@@ -328,7 +362,6 @@ export default function Header() {
                     />
                   </ModalContent>
                 </Modal>
-
                 <Modal
                   isOpen={isForgotPasswordOpen}
                   onClose={onForgotPasswordClose}

@@ -14,8 +14,9 @@ import {
   Divider,
   Spacer,
 } from '@chakra-ui/react';
-// import axios from 'axios';
-import { useState } from 'react';
+import axios from 'axios';
+import { useContext, useState } from 'react';
+import { UserContext } from '../UserContext';
 import ThirdPartyLogin from './ThirdPartyLogin';
 
 export default function Signin({
@@ -25,59 +26,37 @@ export default function Signin({
 }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [userContext, setUserContext] = useContext(UserContext);
 
   const handleSubmit = () => {
     try {
-      fetch(`${process.env.REACT_APP_SERVER_URL}/signin/password`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      })
-        .then(async res => {
-          if (!res.ok) {
-            if (res.status === 400) {
-              console.log('Please fill all the fields correctly!');
-            } else if (res.status === 401) {
-              console.log('Invalid email and password combination.');
-            } else {
-              console.log('genericErrorMessage');
-            }
-          } else {
-            const data = await res.json();
-            // setUserContext(oldValues => {
-            //   return { ...oldValues, token: data.token }
-            // })
-            console.log(data);
+      axios
+        .post(
+          `${process.env.REACT_APP_SERVER_URL}/signin/password`,
+          {
+            username,
+            password,
+          },
+          {
+            withCredentials: true,
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Credentials': true,
+            },
           }
-        })
-        .catch(err => {
-          console.log(err);
+        )
+        .then(res => {
+          console.log(res);
+          if (res.status === 200) {
+            setUserContext(prev => {
+              return { ...prev, token: res.data.token };
+            });
+            closeSignin();
+          }
         });
-      //   axios
-      //     .post(
-      //       `${process.env.REACT_APP_SERVER_URL}/signin/password`,
-      //       {
-      //         username,
-      //         password,
-      //       },
-      //       {
-      //         withCredentials: true,
-      //         headers: {
-      //           Accept: 'application/json',
-      //           'Content-Type': 'application/json',
-      //           'Access-Control-Allow-Credentials': true,
-      //         },
-      //       }
-      //     )
-      //     .then(res => {
-      //       console.log(res);
-      //       if (res.status === 202) {
-      //         closeSignin();
-      //       }
-      //     });
     } catch (err) {
-      //   console.error(err);
+      console.error(err);
     }
   };
 
@@ -136,7 +115,13 @@ export default function Signin({
                   Sign in
                 </Button>
                 <Spacer />
-                <Button onClick={openForgotPassword} flexGrow={1}>
+                <Button
+                  onClick={() => {
+                    openForgotPassword();
+                    console.log(userContext);
+                  }}
+                  flexGrow={1}
+                >
                   Forget Password ?
                 </Button>
               </Flex>
