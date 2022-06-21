@@ -14,6 +14,8 @@ import {
   Divider,
   Spacer,
 } from '@chakra-ui/react';
+import axios from 'axios';
+import { useState } from 'react';
 import ThirdPartyLogin from './ThirdPartyLogin';
 
 export default function Signin({
@@ -21,6 +23,53 @@ export default function Signin({
   closeSignin,
   openSignup,
 }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = () => {
+    try {
+      axios
+        .post(
+          `${process.env.REACT_APP_SERVER_URL}/signin/password`,
+          {
+            username,
+            password,
+          },
+          {
+            withCredentials: true,
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Credentials': true,
+            },
+          }
+        )
+        .then(res => {
+          console.log(res);
+          if (res.status === 202) {
+            closeSignin();
+          }
+        });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const checkAuthTemp = () => {
+    console.log('isAuthcheck');
+    try {
+      axios
+        .get(`${process.env.REACT_APP_SERVER_URL}/isAutherised`, {
+          withCredentials: true,
+        })
+        .then(res => {
+          console.log(res.data);
+        });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <Flex
       align={'center'}
@@ -37,13 +86,23 @@ export default function Signin({
         </Stack>
         <Box p={8}>
           <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+            <FormControl id="username">
+              <FormLabel>Username</FormLabel>
+              <Input
+                type="username"
+                onChange={e => {
+                  setUsername(e.target.value);
+                }}
+              />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
-              <Input type="password" />
+              <Input
+                type="password"
+                onChange={e => {
+                  setPassword(e.target.value);
+                }}
+              />
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -61,11 +120,12 @@ export default function Signin({
                   _hover={{
                     bg: 'blue.500',
                   }}
+                  onClick={handleSubmit}
                 >
                   Sign in
                 </Button>
                 <Spacer />
-                <Button onClick={openForgotPassword} flexGrow={1}>
+                <Button onClick={checkAuthTemp} flexGrow={1}>
                   Forget Password ?
                 </Button>
               </Flex>

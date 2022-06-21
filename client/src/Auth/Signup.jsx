@@ -17,9 +17,35 @@ import {
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import ThirdPartyLogin from './ThirdPartyLogin';
+import axios from 'axios';
 
 export default function Signup({ closeSignup, openSignin }) {
   const [showPassword, setShowPassword] = useState(false);
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = () => {
+    try {
+      axios
+        .post(`${process.env.REACT_APP_SERVER_URL}/signup/password`, {
+          firstname,
+          lastname,
+          username,
+          email,
+          password,
+        })
+        .then(res => {
+          if (res.status === 202) {
+            closeSignup();
+          }
+        });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <Flex
@@ -42,24 +68,53 @@ export default function Signup({ closeSignup, openSignin }) {
               <Box>
                 <FormControl id="firstName" isRequired>
                   <FormLabel>First Name</FormLabel>
-                  <Input type="text" />
+                  <Input
+                    type="text"
+                    onChange={e => {
+                      setFirstname(e.target.value);
+                    }}
+                  />
                 </FormControl>
               </Box>
               <Box>
                 <FormControl id="lastName">
                   <FormLabel>Last Name</FormLabel>
-                  <Input type="text" />
+                  <Input
+                    type="text"
+                    onChange={e => {
+                      setLastname(e.target.value);
+                    }}
+                  />
                 </FormControl>
               </Box>
             </HStack>
+            <FormControl id="usernmae" isRequired>
+              <FormLabel>Username</FormLabel>
+              <Input
+                type="text"
+                onChange={e => {
+                  setUsername(e.target.value);
+                }}
+              />
+            </FormControl>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input
+                type="email"
+                onChange={e => {
+                  setEmail(e.target.value);
+                }}
+              />
             </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? 'text' : 'password'} />
+                <Input
+                  type={showPassword ? 'text' : 'password'}
+                  onChange={e => {
+                    setPassword(e.target.value);
+                  }}
+                />
                 <InputRightElement h={'full'}>
                   <Button
                     variant={'ghost'}
@@ -81,6 +136,7 @@ export default function Signup({ closeSignup, openSignin }) {
                 _hover={{
                   bg: 'blue.500',
                 }}
+                onClick={handleSubmit}
               >
                 Sign up
               </Button>

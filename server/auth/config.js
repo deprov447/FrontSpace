@@ -36,15 +36,19 @@ const initializePassport = (passport) => {
 
 const checkAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
+    console.log("check auth failed");
     return next();
   }
+  console.log("check auth passed");
   return res.sendStatus(401);
 };
 
 const checkNotAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
+    console.log("check not auth failed");
     return res.sendStatus(409);
   }
+  console.log("check not auth passed");
   return next();
 };
 

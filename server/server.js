@@ -3,8 +3,8 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
 const passport = require("passport");
-const flash = require("express-flash");
 const session = require("express-session");
+const cookieParser = require("cookie-parser");
 
 const router = require("./routes");
 const { initializePassport } = require("./auth/config");
@@ -23,14 +23,16 @@ initializePassport(passport);
 
 express()
   .set("view engine", "ejs")
-  .use(express.urlencoded({ extended: true }))
-  .use(express.json())
+  .use(cookieParser())
   .use(
     cors({
       corsOrigin: process.env.CLIENT_URL,
+      credentials: true,
+      optionSuccessStatus: 200,
     })
   )
-  .use(flash())
+  .use(express.urlencoded({ extended: true }))
+  .use(express.json())
   .use(
     session({
       secret: process.env.SESSION_SECRET,
