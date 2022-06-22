@@ -18,7 +18,7 @@ import { useContext, useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import ThirdPartyLogin from './ThirdPartyLogin';
 import axios from 'axios';
-import { UserContext } from '../UserContext';
+import { UserContext } from '../Contexts/UserContext';
 
 export default function Signup({ closeSignup, openSignin }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -49,6 +49,7 @@ export default function Signup({ closeSignup, openSignin }) {
               'Content-Type': 'application/json',
               'Access-Control-Allow-Credentials': true,
             },
+            credentials: 'include',
           }
         )
         .then(res => {

@@ -38,7 +38,7 @@ import Signup from './Auth/Signup';
 import Signin from './Auth/Signin';
 import ForgotPassword from './Auth/ForgetPassword';
 import signoutHandler from './Auth/signout';
-import { UserContext } from './UserContext';
+import { UserContext } from './Contexts/UserContext';
 import { useCallback } from 'react';
 import refreshToken from './Auth/refreshToken';
 import { useEffect } from 'react';
@@ -61,18 +61,6 @@ export default function Header() {
   } = useDisclosure();
 
   const [userContext, setUserContext] = useContext(UserContext);
-
-  const verifyUser = useCallback(() => {
-    const token = refreshToken();
-    setUserContext(prev => {
-      return { ...prev, token };
-    });
-    setTimeout(verifyUser, 5 * 60 * 1000);
-  }, [setUserContext]);
-
-  useEffect(() => {
-    verifyUser();
-  }, [verifyUser]);
 
   const { toggleColorMode: toggleMode } = useColorMode();
   const text = useColorModeValue('dark', 'light');

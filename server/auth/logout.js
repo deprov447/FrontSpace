@@ -4,6 +4,8 @@ const { COOKIE_OPTION } = require("./authenticate");
 const signout = (req, res, next) => {
   const { signedCookies = {} } = req;
   const { refreshToken } = signedCookies;
+  console.log("reftoken in signout", refreshToken);
+
   User.findById(req.user._id).then(
     (user) => {
       const tokenIndex = user.refreshToken.findIndex(
@@ -19,6 +21,7 @@ const signout = (req, res, next) => {
           res.statusCode = 500;
           res.send(err);
         } else {
+          console.log(res);
           res.clearCookie("refreshToken", COOKIE_OPTION);
           res.send({ success: true });
         }

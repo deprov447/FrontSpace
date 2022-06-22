@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import { ChakraProvider } from '@chakra-ui/react';
 import Header from './Header';
 import Footer from './Footer';
-import { UserProvider } from './UserContext';
+import { UserProvider } from './Contexts/UserContext';
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);

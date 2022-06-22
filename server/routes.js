@@ -17,8 +17,8 @@ const router = express();
 router
   .get("/categories", fetchCategoriesList)
   .get("/categories/:category_name", fetchTemplatesList)
-  .get("/template/:template_id", fetchTemplateForm)
-  .post("/template/:template_id", saveTemplateFormDetails)
+  .get("/template/:template_id", verifyUser, fetchTemplateForm)
+  .post("/template/:template_id", verifyUser, saveTemplateFormDetails)
   .post("/signup/password", signupPassword)
   .post("/refreshToken", refreshToken)
   .post("/signin/password", passport.authenticate("local"), signinPassword)

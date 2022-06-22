@@ -25,6 +25,7 @@ mongoose.connection.once("open", () => {
 express()
   .set("view engine", "ejs")
   .use(express.urlencoded({ extended: true }))
+  .use(cookieParser(process.env.COOKIE_SECRET))
   .use(express.json())
   .use(
     expressSession({
@@ -34,7 +35,6 @@ express()
       cookie: { secure: true },
     })
   )
-  .use(cookieParser(process.env.COOKIE_SECRET))
   .use(
     cors({
       origin: process.env.CLIENT_URL,

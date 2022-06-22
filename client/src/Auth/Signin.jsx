@@ -16,13 +16,14 @@ import {
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useContext, useState } from 'react';
-import { UserContext } from '../UserContext';
+import { UserContext } from '../Contexts/UserContext';
 import ThirdPartyLogin from './ThirdPartyLogin';
 
 export default function Signin({
   openForgotPassword,
   closeSignin,
   openSignup,
+  showExtraOps = true,
 }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -44,6 +45,7 @@ export default function Signin({
               'Content-Type': 'application/json',
               'Access-Control-Allow-Credentials': true,
             },
+            credentials: 'include',
           }
         )
         .then(res => {
@@ -114,37 +116,46 @@ export default function Signin({
                 >
                   Sign in
                 </Button>
-                <Spacer />
-                <Button
-                  onClick={() => {
-                    openForgotPassword();
-                    console.log(userContext);
-                  }}
-                  flexGrow={1}
-                >
-                  Forget Password ?
-                </Button>
+                {showExtraOps && (
+                  <>
+                    <Spacer />
+                    <Button
+                      onClick={() => {
+                        openForgotPassword();
+                        console.log(userContext);
+                      }}
+                      flexGrow={1}
+                    >
+                      Forget Password ?
+                    </Button>
+                  </>
+                )}
               </Flex>
             </Stack>
-            <Stack pt={6}>
-              <Text align={'center'}>
-                New here?{'  '}
-                <Button
-                  variant="solid"
-                  onClick={() => {
-                    closeSignin();
-                    openSignup();
-                  }}
-                  size="sm"
-                >
-                  Sign Up
-                </Button>
-              </Text>
-            </Stack>
-            <Divider orientation="horizontal" />
-            <Stack>
-              <ThirdPartyLogin />
-            </Stack>
+
+            {showExtraOps && (
+              <>
+                <Stack pt={6}>
+                  <Text align={'center'}>
+                    New here?{'  '}
+                    <Button
+                      variant="solid"
+                      onClick={() => {
+                        closeSignin();
+                        openSignup();
+                      }}
+                      size="sm"
+                    >
+                      Sign Up
+                    </Button>
+                  </Text>
+                </Stack>
+                <Divider orientation="horizontal" />
+                <Stack>
+                  <ThirdPartyLogin />
+                </Stack>
+              </>
+            )}
           </Stack>
         </Box>
       </Stack>
