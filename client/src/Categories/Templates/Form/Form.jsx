@@ -93,7 +93,19 @@ export default function Component() {
         }
       )
       .then(res => {
-        res.status === 201 ? onOpen() : alert('try again :/');
+        switch (res.status) {
+          case 201:
+            onOpen();
+            break;
+          case 409:
+            alert('Duplicate entry');
+            break;
+          case 500:
+            alert('Internal server error');
+            break;
+          default:
+            alert('Unknown error');
+        }
       })
       .catch(err => {
         console.error(err);
@@ -186,7 +198,7 @@ export default function Component() {
                             <InputGroup size="md">
                               <Input
                                 mb={6}
-                                value={'hello'}
+                                value={`${formState.Subdomain}.${process.env.REACT_APP_CLIENT_URL}`}
                                 colorScheme="teal"
                                 id="resultLink"
                                 variant="outline"
