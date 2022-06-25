@@ -9,10 +9,18 @@ import {
   useColorModeValue,
   VisuallyHidden,
 } from '@chakra-ui/react';
+import fileUpload from 'fuctbase64';
 
 const ImageInput = ({ field, changeFormState }) => {
   const handleChange = e => {
-    changeFormState(field, e.target.value);
+    fileUpload(e)
+      .then(data => {
+        changeFormState(field, data);
+        console.log('success uploaded');
+      })
+      .catch(err => {
+        console.error(err);
+      });
   };
 
   return (
@@ -74,6 +82,7 @@ const ImageInput = ({ field, changeFormState }) => {
                   id="file-upload"
                   name="file-upload"
                   type="file"
+                  accept="image/*"
                   onChange={handleChange}
                 />
               </VisuallyHidden>

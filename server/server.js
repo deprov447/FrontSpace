@@ -24,9 +24,9 @@ mongoose.connection.once("open", () => {
 
 express()
   .set("view engine", "ejs")
-  .use(express.urlencoded({ extended: true }))
+  .use(express.urlencoded({ extended: true, limit: "20mb" }))
   .use(cookieParser(process.env.COOKIE_SECRET))
-  .use(express.json())
+  .use(express.json({ limit: "20mb" }))
   .use(
     expressSession({
       secret: "eessecret",
