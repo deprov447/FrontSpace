@@ -22,26 +22,21 @@ import {
   ModalContent,
 } from '@chakra-ui/react';
 import { useViewportScroll } from 'framer-motion';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 import { IoIosArrowDown } from 'react-icons/io';
 import {
   AiFillHome,
-  AiOutlineInbox,
   AiOutlineMenu,
   AiOutlineMail,
   AiOutlinePlayCircle,
 } from 'react-icons/ai';
-import { BsFillCameraVideoFill } from 'react-icons/bs';
 import { FaMoon, FaSun } from 'react-icons/fa';
-import { SiPagekit } from 'react-icons/si';
 import Signup from './Auth/Signup';
 import Signin from './Auth/Signin';
 import ForgotPassword from './Auth/ForgetPassword';
 import signoutHandler from './Auth/signout';
 import { UserContext } from './Contexts/UserContext';
-import { useCallback } from 'react';
-import refreshToken from './Auth/refreshToken';
-import { useEffect } from 'react';
 
 export default function Header() {
   const {
@@ -174,7 +169,9 @@ export default function Header() {
                 _hover={{ bg: hbgh }}
               >
                 <AiOutlineMail />
-                <chakra.span ml={3}>Mail Us</chakra.span>
+                <a href="mailto:deprov447+frontpage.protonmail.com">
+                  <chakra.span ml={3}>Mail Us</chakra.span>
+                </a>
               </Link>
             </Box>
           </Stack>
@@ -204,20 +201,61 @@ export default function Header() {
         justifySelf="self-start"
         onClick={mobileNav.onClose}
       />
-      <Button w="full" variant="ghost" leftIcon={<AiFillHome />}>
-        Dashboard
-      </Button>
+      {/* Showcase, src code, signin signup */}
+
       <Button
-        w="full"
-        variant="solid"
-        colorScheme="brand"
-        leftIcon={<AiOutlineInbox />}
+        bg={bg}
+        color="gray.500"
+        display="inline-flex"
+        alignItems="center"
+        fontSize="md"
+        _hover={{ color: cl }}
+        _focus={{ boxShadow: 'none' }}
       >
-        Inbox
+        Showcase
       </Button>
-      <Button w="full" variant="ghost" leftIcon={<BsFillCameraVideoFill />}>
-        Videos
-      </Button>
+      <a href="https://github.com/deprov447/frontpage">
+        <Button
+          bg={bg}
+          color="gray.500"
+          display="inline-flex"
+          alignItems="center"
+          fontSize="md"
+          _hover={{ color: cl }}
+          _focus={{ boxShadow: 'none' }}
+        >
+          Source Code
+        </Button>
+      </a>
+
+      <Flex
+        justify="space-evenly"
+        align="center"
+        color="gray.400"
+        width={'100%'}
+      >
+        {userContext.token && (
+          <Button
+            variant="solid"
+            onClick={() => {
+              signoutHandler(userContext, setUserContext);
+            }}
+            size="sm"
+          >
+            Sign Out
+          </Button>
+        )}
+        {!userContext.token && (
+          <>
+            <Button variant="solid" onClick={onSignupOpen} size="sm">
+              Sign up
+            </Button>
+            <Button variant="solid" onClick={onSigninOpen} size="sm">
+              Sign in
+            </Button>
+          </>
+        )}
+      </Flex>
     </VStack>
   );
   return (
@@ -240,13 +278,13 @@ export default function Header() {
             alignItems="center"
             justifyContent="space-between"
           >
-            <Flex align="flex-start">
-              <Link to="/">
+            <Link as={ReactRouterLink} to="/">
+              <Flex align="flex-start">
                 <HStack>
-                  <SiPagekit />
+                  <AiFillHome />
                 </HStack>
-              </Link>
-            </Flex>
+              </Flex>
+            </Link>
             <Flex>
               <HStack spacing="5" display={{ base: 'none', md: 'flex' }}>
                 <Popover>
@@ -283,17 +321,19 @@ export default function Header() {
                 >
                   Showcase
                 </Button>
-                <Button
-                  bg={bg}
-                  color="gray.500"
-                  display="inline-flex"
-                  alignItems="center"
-                  fontSize="md"
-                  _hover={{ color: cl }}
-                  _focus={{ boxShadow: 'none' }}
-                >
-                  Source Code
-                </Button>
+                <a href="https://github.com/deprov447/frontpage">
+                  <Button
+                    bg={bg}
+                    color="gray.500"
+                    display="inline-flex"
+                    alignItems="center"
+                    fontSize="md"
+                    _hover={{ color: cl }}
+                    _focus={{ boxShadow: 'none' }}
+                  >
+                    Source Code
+                  </Button>
+                </a>
               </HStack>
             </Flex>
             <Flex justify="flex-end" align="center" color="gray.400">

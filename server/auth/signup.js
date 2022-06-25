@@ -4,8 +4,8 @@ const { getToken, getRefreshToken, COOKIE_OPTION } = require("./authenticate");
 const signupPassword = (req, res, next) => {
   console.log("signup/password hit");
   if (!req.body.username) {
-    (res.statusCode = 500),
-      res.send({ name: "username-error", message: "username required" });
+    res.statusCode = 500;
+    res.send({ name: "username-error", message: "username required" });
   } else {
     User.register(
       new User({

@@ -9,6 +9,8 @@ import NotFound404 from './NotFound404';
 import AuthChecker from './Auth/AuthChecker';
 import refreshToken from './Auth/refreshToken';
 import { UserContext } from './Contexts/UserContext';
+import Header from './Header';
+import Footer from './Footer';
 
 function App() {
   const [userContext, setUserContext] = useContext(UserContext);
@@ -27,6 +29,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/categories" element={<Categories />} />
@@ -41,6 +44,7 @@ function App() {
         />
         <Route path="*" element={<NotFound404 />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
