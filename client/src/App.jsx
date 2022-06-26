@@ -30,20 +30,25 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/categories" element={<Categories />} />
-        <Route path="/categories/:category_name" element={<CategoriesPage />} />
-        <Route
-          path="/template/:templateId"
-          element={
-            <AuthChecker>
-              <Form />
-            </AuthChecker>
-          }
-        />
-        <Route path="*" element={<NotFound404 />} />
-      </Routes>
+      <div id="mainbody">
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route
+            path="/categories/:category_name"
+            element={<CategoriesPage />}
+          />
+          <Route
+            path="/template/:templateId"
+            element={
+              <AuthChecker>
+                <Form />
+              </AuthChecker>
+            }
+          />
+          <Route path="*" element={<NotFound404 />} />
+        </Routes>
+      </div>
       <Footer />
     </BrowserRouter>
   );
