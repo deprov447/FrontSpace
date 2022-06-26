@@ -9,10 +9,20 @@ import {
   useColorModeValue,
   VisuallyHidden,
 } from '@chakra-ui/react';
+import axios from 'axios';
 
 const ImageInput = ({ field, changeFormState }) => {
   const handleChange = e => {
-    changeFormState(field, e.target.value);
+    const form = new FormData();
+    form.append('image', e.target.files[0]);
+    form.append('key', process.env.REACT_APP_IMGBB_API_KEY);
+    axios
+      .post('https://api.imgbb.com/1/upload', form, {})
+      .then(data => {
+        console.log(data.data.data.url);
+        changeFormState(field, data.data.data.url);
+      })
+      .catch(err => console.error(err));
   };
 
   return (
@@ -58,7 +68,7 @@ const ImageInput = ({ field, changeFormState }) => {
             alignItems="baseline"
           >
             <chakra.label
-              htmlFor="file-upload"
+              // htmlFor="file-upload"
               cursor="pointer"
               rounded="md"
               fontSize="md"
@@ -71,9 +81,10 @@ const ImageInput = ({ field, changeFormState }) => {
               <span>Upload a file</span>
               <VisuallyHidden>
                 <input
-                  id="file-upload"
+                  // id="file-upload"
                   name="file-upload"
                   type="file"
+                  accept="image/*"
                   onChange={handleChange}
                 />
               </VisuallyHidden>

@@ -14,13 +14,54 @@ import {
   Divider,
   Spacer,
 } from '@chakra-ui/react';
+import axios from 'axios';
+import { useContext, useState } from 'react';
+import { UserContext } from '../Contexts/UserContext';
 import ThirdPartyLogin from './ThirdPartyLogin';
 
 export default function Signin({
   openForgotPassword,
   closeSignin,
   openSignup,
+  showExtraOps = true,
 }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [userContext, setUserContext] = useContext(UserContext);
+
+  const handleSubmit = () => {
+    try {
+      axios
+        .post(
+          `${process.env.REACT_APP_SERVER_URL}/signin/password`,
+          {
+            username,
+            password,
+          },
+          {
+            withCredentials: true,
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Credentials': true,
+            },
+            credentials: 'include',
+          }
+        )
+        .then(res => {
+          console.log(res);
+          if (res.status === 200) {
+            setUserContext(prev => {
+              return { ...prev, token: res.data.token };
+            });
+            closeSignin();
+          }
+        });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <Flex
       align={'center'}
@@ -37,13 +78,23 @@ export default function Signin({
         </Stack>
         <Box p={8}>
           <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+            <FormControl id="username">
+              <FormLabel>Username</FormLabel>
+              <Input
+                type="username"
+                onChange={e => {
+                  setUsername(e.target.value);
+                }}
+              />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
-              <Input type="password" />
+              <Input
+                type="password"
+                onChange={e => {
+                  setPassword(e.target.value);
+                }}
+              />
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -61,34 +112,50 @@ export default function Signin({
                   _hover={{
                     bg: 'blue.500',
                   }}
+                  onClick={handleSubmit}
                 >
                   Sign in
                 </Button>
-                <Spacer />
-                <Button onClick={openForgotPassword} flexGrow={1}>
-                  Forget Password ?
-                </Button>
+                {showExtraOps && (
+                  <>
+                    <Spacer />
+                    <Button
+                      onClick={() => {
+                        openForgotPassword();
+                        console.log(userContext);
+                      }}
+                      flexGrow={1}
+                    >
+                      Forget Password ?
+                    </Button>
+                  </>
+                )}
               </Flex>
             </Stack>
-            <Stack pt={6}>
-              <Text align={'center'}>
-                New here?{'  '}
-                <Button
-                  variant="solid"
-                  onClick={() => {
-                    closeSignin();
-                    openSignup();
-                  }}
-                  size="sm"
-                >
-                  Sign Up
-                </Button>
-              </Text>
-            </Stack>
-            <Divider orientation="horizontal" />
-            <Stack>
-              <ThirdPartyLogin />
-            </Stack>
+
+            {showExtraOps && (
+              <>
+                <Stack pt={6}>
+                  <Text align={'center'}>
+                    New here?{'  '}
+                    <Button
+                      variant="solid"
+                      onClick={() => {
+                        closeSignin();
+                        openSignup();
+                      }}
+                      size="sm"
+                    >
+                      Sign Up
+                    </Button>
+                  </Text>
+                </Stack>
+                <Divider orientation="horizontal" />
+                <Stack>
+                  <ThirdPartyLogin />
+                </Stack>
+              </>
+            )}
           </Stack>
         </Box>
       </Stack>

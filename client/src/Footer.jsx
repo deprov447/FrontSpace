@@ -8,7 +8,8 @@ import {
   useColorModeValue,
   VisuallyHidden,
 } from '@chakra-ui/react';
-import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaTwitter } from 'react-icons/fa';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 const SocialButton = ({ children, label, href }) => {
   return (
@@ -50,9 +51,15 @@ export default function Footer() {
       >
         <h2>FirstPage</h2>
         <Stack direction={'row'} spacing={6}>
-          <Link href={'#'}>Home</Link>
-          <Link href={'#'}>Source Code</Link>
-          <Link href={'#'}>Contact</Link>
+          <Link as={ReactRouterLink} to="/">
+            Home
+          </Link>
+          <Link href={'https://github.com/deprov447/frontpage'}>
+            Source Code
+          </Link>
+          <Link href={'mailto:deprov447+frontpage@protonmail.com'}>
+            Contact
+          </Link>
         </Stack>
       </Container>
 
@@ -72,14 +79,11 @@ export default function Footer() {
         >
           <Text>© 2022 deprov447. All rights reserved</Text>
           <Stack direction={'row'} spacing={6}>
-            <SocialButton label={'Twitter'} href={'#'}>
+            <SocialButton
+              label={'Twitter'}
+              href={'https://twitter.com/@sigpiped'}
+            >
               <FaTwitter />
-            </SocialButton>
-            <SocialButton label={'YouTube'} href={'#'}>
-              <FaYoutube />
-            </SocialButton>
-            <SocialButton label={'Instagram'} href={'#'}>
-              <FaInstagram />
             </SocialButton>
           </Stack>
         </Container>

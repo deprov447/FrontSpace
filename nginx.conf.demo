@@ -1,0 +1,16 @@
+server {
+       listen 81;
+       listen [::]:81;
+
+            set $serverAddr "http://127.0.0.1:3000";
+            set $subdomain "";
+            if ($host ~ ^(.*)\.localhost$) {
+                set $serverAddr "http://127.0.0.1:4000";
+                set $subdomain $1;              
+        }
+    
+       location / {
+                proxy_pass          $serverAddr;
+                proxy_set_header    X-Subdomain     $subdomain;
+       }
+}

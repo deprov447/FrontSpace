@@ -5,6 +5,7 @@ import TextInput from './TextInput';
 const FormParsed = ({ templateFormElements, changeFormState }) => {
   return (
     <>
+      <TextInput field={'Subdomain'} changeFormState={changeFormState} />
       {templateFormElements.map(({ field, type }) => {
         let ret;
         if (type === 'text')

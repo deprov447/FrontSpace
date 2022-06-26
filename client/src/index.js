@@ -4,20 +4,19 @@ import * as ReactDOM from 'react-dom/client';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { ChakraProvider } from '@chakra-ui/react';
-import Header from './Header';
-import Footer from './Footer';
+import { UserProvider } from './Contexts/UserContext';
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
 
 root.render(
   <StrictMode>
-    <ChakraProvider>
-      <ColorModeScript />
-      <Header />
-      <App />
-      <Footer display="relative" bottom="0" />
-    </ChakraProvider>
+    <UserProvider>
+      <ChakraProvider>
+        <ColorModeScript />
+        <App />
+      </ChakraProvider>
+    </UserProvider>
   </StrictMode>
 );
 

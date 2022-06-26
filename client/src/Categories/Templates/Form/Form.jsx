@@ -35,12 +35,16 @@ import {
 } from 'react-icons/fa';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '../../../Contexts/UserContext';
 
 export default function Component() {
   const { templateId } = useParams();
 
   const [templateFormElements, setTemplateFormElements] = useState([]);
   const [formState, setFormState] = useState({});
+
+  const [userContext, setUserContext] = useContext(UserContext);
 
   const changeFormState = (field, value) => {
     setFormState(prevFormState => {
@@ -51,14 +55,23 @@ export default function Component() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_SERVER_URL}/template/${templateId}`)
+      .get(`${process.env.REACT_APP_SERVER_URL}/template/${templateId}`, {
+        withCredentials: true,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Credentials': true,
+          Authorization: `Bearer ${userContext.token}`,
+        },
+        credentials: 'include',
+      })
       .then(res => {
         setTemplateFormElements(() => res.data.templateFormElements);
       })
       .catch(err => {
         console.error(err);
       });
-  }, [templateId]);
+  }, [templateId, userContext.token]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -67,10 +80,32 @@ export default function Component() {
     axios
       .post(
         `${process.env.REACT_APP_SERVER_URL}/template/${templateId}`,
-        formState
+        formState,
+        {
+          withCredentials: true,
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Credentials': true,
+            Authorization: `Bearer ${userContext.token}`,
+          },
+          credentials: 'include',
+        }
       )
       .then(res => {
-        res.status === 201 ? onOpen() : alert('try again :/');
+        switch (res.status) {
+          case 201:
+            onOpen();
+            break;
+          case 409:
+            alert('Duplicate entry');
+            break;
+          case 500:
+            alert('Internal server error');
+            break;
+          default:
+            alert('Unknown error');
+        }
       })
       .catch(err => {
         console.error(err);
@@ -163,7 +198,7 @@ export default function Component() {
                             <InputGroup size="md">
                               <Input
                                 mb={6}
-                                value={'hello'}
+                                value={`${formState.Subdomain}.${process.env.REACT_APP_CLIENT_URL}`}
                                 colorScheme="teal"
                                 id="resultLink"
                                 variant="outline"

@@ -6,17 +6,23 @@ import axios from 'axios';
 
 const CategoriesPage = () => {
   const { category_name } = useParams();
+
   const [templatesList, setTemplatesList] = useState([]);
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_SERVER_URL}/categories/${category_name}`)
+      .get(`${process.env.REACT_APP_SERVER_URL}/categories/${category_name}`, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(res => {
         setTemplatesList(res.data);
       })
       .catch(err => {
         console.error(err);
       });
-  });
+  }, [setTemplatesList, category_name]);
   return (
     <>
       <Center>

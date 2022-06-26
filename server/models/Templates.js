@@ -8,6 +8,7 @@ const Templates = mongoose.model(
     templateThumb: String,
     templatePreviewURL: String,
     templateFormElements: [],
+    templateString: String,
   })
 );
 
