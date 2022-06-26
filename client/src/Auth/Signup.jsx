@@ -14,7 +14,7 @@ import {
   useColorModeValue,
   Divider,
 } from '@chakra-ui/react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import ThirdPartyLogin from './ThirdPartyLogin';
 import axios from 'axios';
@@ -64,6 +64,19 @@ export default function Signup({ closeSignup, openSignin }) {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    const listener = event => {
+      if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+        event.preventDefault();
+        handleSubmit();
+      }
+    };
+    document.addEventListener('keydown', listener);
+    return () => {
+      document.removeEventListener('keydown', listener);
+    };
+  }, []);
 
   return (
     <Flex
