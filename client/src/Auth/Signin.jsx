@@ -15,7 +15,7 @@ import {
   Spacer,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../Contexts/UserContext';
 import ThirdPartyLogin from './ThirdPartyLogin';
 
@@ -61,6 +61,19 @@ export default function Signin({
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    const listener = event => {
+      if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+        event.preventDefault();
+        handleSubmit();
+      }
+    };
+    document.addEventListener('keydown', listener);
+    return () => {
+      document.removeEventListener('keydown', listener);
+    };
+  }, []);
 
   return (
     <Flex
