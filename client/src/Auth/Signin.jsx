@@ -27,6 +27,7 @@ export default function Signin({
 }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isPassWrong, setIsPassWrong] = useState(false);
   const [userContext, setUserContext] = useContext(UserContext);
 
   const handleSubmit = () => {
@@ -56,8 +57,18 @@ export default function Signin({
             });
             closeSignin();
           }
+        })
+        .catch(err => {
+          console.log(err);
+          if (err.response.status === 401) {
+            setIsPassWrong(true);
+            console.log('wrong pass');
+          } else {
+            alert('server error');
+          }
         });
     } catch (err) {
+      console.log('eror');
       console.error(err);
     }
   };
@@ -73,7 +84,7 @@ export default function Signin({
     return () => {
       document.removeEventListener('keydown', listener);
     };
-  }, []);
+  });
 
   return (
     <Flex
@@ -91,10 +102,17 @@ export default function Signin({
         </Stack>
         <Box p={8}>
           <Stack spacing={4}>
+            {isPassWrong && (
+              <p align="center" color="red">
+                Wrong Password
+              </p>
+            )}
             <FormControl id="username">
               <FormLabel>Username</FormLabel>
               <Input
+                isInvalid={isPassWrong}
                 type="username"
+                errorBorderColor="red.500"
                 onChange={e => {
                   setUsername(e.target.value);
                 }}
@@ -103,7 +121,9 @@ export default function Signin({
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
               <Input
+                isInvalid={isPassWrong}
                 type="password"
+                errorBorderColor="red.500"
                 onChange={e => {
                   setPassword(e.target.value);
                 }}
@@ -145,7 +165,6 @@ export default function Signin({
                 )}
               </Flex>
             </Stack>
-
             {showExtraOps && (
               <>
                 <Stack pt={6}>

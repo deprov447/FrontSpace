@@ -76,7 +76,7 @@ export default function Signup({ closeSignup, openSignin }) {
     return () => {
       document.removeEventListener('keydown', listener);
     };
-  }, []);
+  });
 
   return (
     <Flex
