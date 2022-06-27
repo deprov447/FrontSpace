@@ -1,18 +1,15 @@
-FROM node AS build_client
-WORKDIR /app
+FROM node:alpine
 
-COPY ./package.json .
-COPY ./package-lock.json .
-COPY ./src ./src
-COPY ./public ./public
-COPY ./.env ./.env
+WORKDIR /app
+COPY package.json .
+COPY package-lock.json .
+COPY public public
+COPY src src
+ARG REACT_APP_SERVER_URL="http://localhost:4000"
+ARG REACT_APP_CLIENT_URL="localhost:3000"
+ARG REACT_APP_IMGBB_API_KEY
 
 RUN npm i
 RUN npm run build
-
-FROM node AS server
-WORKDIR /react_build_file
-COPY --from=build_client /app/build .
-EXPOSE 4000
-
+WORKDIR /app/build
 CMD npx serve
