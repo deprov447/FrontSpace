@@ -74,7 +74,7 @@ export default function Features() {
               textTransform="uppercase"
               letterSpacing="wide"
             >
-              Everything you need
+              Easiest way to create webpages
             </chakra.h2>
             <chakra.h2
               mb={3}
@@ -85,17 +85,8 @@ export default function Features() {
               lineHeight="shorter"
               letterSpacing="tight"
             >
-              All-in-one platform
+              FRONT SPACE
             </chakra.h2>
-            <chakra.p
-              mb={6}
-              fontSize={{ base: 'lg', md: 'xl' }}
-              textAlign={{ base: 'center', sm: 'left' }}
-              color={useColorModeValue('gray.600', 'gray.500')}
-            >
-              Lorem ipsum dolor sit amet consect adipisicing elit. Possimus
-              magnam voluptatum cupiditate veritatis in accusamus quisquam.
-            </chakra.p>
           </Box>
           <GridItem colSpan={2}>
             <Stack
@@ -105,10 +96,10 @@ export default function Features() {
               gridColumnGap={{ md: 8 }}
               gridRowGap={{ md: 10 }}
             >
-              <Feature title="Fully responsive pages"/>
-              <Feature title="Get all your links in a single place"/>
-              <Feature title="Get a free .firstpage.app domain"/>
-              <Feature title="Want to host on a custom domain? We got you"/>
+              <Feature title="Fully responsive pages" />
+              <Feature title="All your links in a single place" />
+              <Feature title="Free .getfront.space domain" />
+              <Feature title="Custom domain? [Coming soon]" />
             </Stack>
           </GridItem>
         </SimpleGrid>

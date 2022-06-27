@@ -20,6 +20,7 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
+  Avatar,
 } from '@chakra-ui/react';
 import { useViewportScroll } from 'framer-motion';
 import { Link as ReactRouterLink } from 'react-router-dom';
@@ -169,7 +170,7 @@ export default function Header() {
                 _hover={{ bg: hbgh }}
               >
                 <AiOutlineMail />
-                <a href="mailto:deprov447+frontpage.protonmail.com">
+                <a href="mailto:deprov447+frontspace.protonmail.com">
                   <chakra.span ml={3}>Mail Us</chakra.span>
                 </a>
               </Link>
@@ -214,7 +215,7 @@ export default function Header() {
       >
         Showcase
       </Button>
-      <a href="https://github.com/deprov447/frontpage">
+      <a href="https://github.com/deprov447/frontspace">
         <Button
           bg={bg}
           color="gray.500"
@@ -321,7 +322,7 @@ export default function Header() {
                 >
                   Showcase
                 </Button>
-                <a href="https://github.com/deprov447/frontpage">
+                <a href="https://github.com/deprov447/frontspace">
                   <Button
                     bg={bg}
                     color="gray.500"
@@ -349,6 +350,7 @@ export default function Header() {
                     Sign Out
                   </Button>
                 )}
+
                 {!userContext.token && (
                   <>
                     <Button variant="solid" onClick={onSignupOpen} size="sm">

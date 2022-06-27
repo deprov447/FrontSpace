@@ -8,6 +8,7 @@ import {
   Image,
   Text,
   Icon,
+  Flex,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
@@ -45,7 +46,7 @@ function Hero() {
           fontSize={{ base: 'lg', md: 'xl' }}
           color={useColorModeValue('gray.600', 'gray.300')}
         >
-          FirstPage lets you create single webpages and lets the world know
+          Front Space lets you create single webpages and lets the world know
           about you, or your company, or your dog. Possibilities are endless.
         </chakra.p>
         <Stack
