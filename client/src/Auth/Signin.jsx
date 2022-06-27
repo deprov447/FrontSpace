@@ -13,6 +13,7 @@ import {
   useColorModeValue,
   Divider,
   Spacer,
+  FormErrorMessage,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
@@ -102,15 +103,9 @@ export default function Signin({
         </Stack>
         <Box p={8}>
           <Stack spacing={4}>
-            {isPassWrong && (
-              <p align="center" color="red">
-                Wrong Password
-              </p>
-            )}
-            <FormControl id="username">
+            <FormControl id="username" isInvalid={isPassWrong}>
               <FormLabel>Username</FormLabel>
               <Input
-                isInvalid={isPassWrong}
                 type="username"
                 errorBorderColor="red.500"
                 onChange={e => {
@@ -118,16 +113,18 @@ export default function Signin({
                 }}
               />
             </FormControl>
-            <FormControl id="password">
+            <FormControl id="password" isInvalid={isPassWrong}>
               <FormLabel>Password</FormLabel>
               <Input
-                isInvalid={isPassWrong}
                 type="password"
                 errorBorderColor="red.500"
                 onChange={e => {
                   setPassword(e.target.value);
                 }}
               />
+              <FormErrorMessage>
+                Password incorrect or user doesn't exist
+              </FormErrorMessage>
             </FormControl>
             <Stack spacing={10}>
               <Stack

@@ -13,12 +13,14 @@ import {
   Text,
   useColorModeValue,
   Divider,
+  FormErrorMessage,
 } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import ThirdPartyLogin from './ThirdPartyLogin';
 import axios from 'axios';
 import { UserContext } from '../Contexts/UserContext';
+import { emailValidation, passwordValidation } from '../regexs';
 
 export default function Signup({ closeSignup, openSignin }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,9 +29,33 @@ export default function Signup({ closeSignup, openSignin }) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [userExist, setUserExist] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const setUserContext = useContext(UserContext)[1];
 
+  let sendAfterTwoSec = null;
+  const usernameCheck = e => {
+    if (e.target.value === '') return;
+    clearTimeout(sendAfterTwoSec);
+    sendAfterTwoSec = setTimeout(function () {
+      axios
+        .post(`${process.env.REACT_APP_SERVER_URL}/doesUserExist`, {
+          username: e.target.value,
+        })
+        .then(res => {
+          if (res.data.doesUserExist === false) {
+            setUserExist(false);
+            setUsername(e.target.value);
+          } else setUserExist(true);
+        })
+        .catch(err => console.error(err));
+    }, 2000);
+  };
   const handleSubmit = () => {
+    setIsSubmitting(true);
+    if (userExist || !passwordValidation(password) || !emailValidation(email))
+      return;
     console.log('handleSubmit called');
     try {
       axios
@@ -63,6 +89,7 @@ export default function Signup({ closeSignup, openSignin }) {
     } catch (err) {
       console.error(err);
     }
+    setIsSubmitting(false);
   };
 
   useEffect(() => {
@@ -119,16 +146,16 @@ export default function Signup({ closeSignup, openSignin }) {
                 </FormControl>
               </Box>
             </HStack>
-            <FormControl id="usernmae" isRequired>
+            <FormControl id="usernmae" isRequired isInvalid={userExist}>
               <FormLabel>Username</FormLabel>
-              <Input
-                type="text"
-                onChange={e => {
-                  setUsername(e.target.value);
-                }}
-              />
+              <Input type="text" onChange={usernameCheck} />
+              <FormErrorMessage>Username already taken</FormErrorMessage>
             </FormControl>
-            <FormControl id="email" isRequired>
+            <FormControl
+              id="email"
+              isRequired
+              isInvalid={!emailValidation(email) && email.length > 0}
+            >
               <FormLabel>Email address</FormLabel>
               <Input
                 type="email"
@@ -136,8 +163,13 @@ export default function Signup({ closeSignup, openSignin }) {
                   setEmail(e.target.value);
                 }}
               />
+              <FormErrorMessage>Looks like an invalid email</FormErrorMessage>
             </FormControl>
-            <FormControl id="password" isRequired>
+            <FormControl
+              id="password"
+              isRequired
+              isInvalid={!passwordValidation(password) && password.length > 0}
+            >
               <FormLabel>Password</FormLabel>
               <InputGroup>
                 <Input
@@ -157,6 +189,16 @@ export default function Signup({ closeSignup, openSignin }) {
                   </Button>
                 </InputRightElement>
               </InputGroup>
+
+              <FormErrorMessage>
+                <ul>
+                  <li>Your password should be 8 charactor long</li>
+                  <li>Have one upper case letter</li>
+                  <li>Have one lower case letter</li>
+                  <li>Have one numeric digit</li>
+                  <li>Have one special charactor</li>
+                </ul>
+              </FormErrorMessage>
             </FormControl>
             <Stack spacing={10} pt={2}>
               <Button
@@ -168,6 +210,12 @@ export default function Signup({ closeSignup, openSignin }) {
                   bg: 'blue.500',
                 }}
                 onClick={handleSubmit}
+                isDisabled={
+                  userExist ||
+                  !passwordValidation(password) ||
+                  !emailValidation(email)
+                }
+                isLoading={isSubmitting}
               >
                 Sign up
               </Button>
