@@ -37,6 +37,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../../Contexts/UserContext';
+import SocialButtons from './SocialButtons';
 
 export default function Component() {
   const { templateId } = useParams();
@@ -192,7 +193,7 @@ export default function Component() {
                               fontSize={['lg', 'lg', 'xl']}
                               color={useColorModeValue('gray.600', 'gray.400')}
                             >
-                              Tell everyone about your new FirstPage
+                              Tell everyone about your new Front Space
                             </chakra.p>
 
                             <InputGroup size="md">
@@ -220,34 +221,12 @@ export default function Component() {
                                 </Button>
                               </InputRightElement>
                             </InputGroup>
-
-                            <HStack justify={'center'}>
-                              <IconButton
-                                colorScheme="facebook"
-                                icon={<FaFacebook />}
-                                fontSize={25}
-                              />
-                              <IconButton
-                                colorScheme="twitter"
-                                icon={<FaTwitter />}
-                                fontSize={25}
-                              />
-                              <IconButton
-                                colorScheme="whatsapp"
-                                icon={<FaWhatsapp />}
-                                fontSize={25}
-                              />
-                              <IconButton
-                                colorScheme="red"
-                                icon={<FaReddit />}
-                                fontSize={25}
-                              />
-                              <IconButton
-                                colorScheme="linkedin"
-                                icon={<FaLinkedin />}
-                                fontSize={25}
-                              />
-                            </HStack>
+                            <SocialButtons
+                              url={() => {
+                                return document.getElementById('resultLink')
+                                  .value;
+                              }}
+                            />
                           </Box>
                         </Box>
                       </ModalBody>

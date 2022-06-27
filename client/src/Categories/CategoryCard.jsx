@@ -4,22 +4,17 @@ import { Link } from 'react-router-dom';
 
 const CategoryCard = ({ name, desc, img }) => {
   return (
-    <Flex
-      bg={useColorModeValue('#F9FAFB', 'gray.600')}
-      p={50}
-      w="full"
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Flex p={50} alignItems="center" justifyContent="center">
       <Link to={name}>
         <Box
-          w="md"
+          maxWidth={'md'}
           mx="auto"
           py={4}
           px={8}
-          bg={useColorModeValue('white', 'gray.800')}
+          bg={useColorModeValue('#F9FAFB', 'gray.600')}
           shadow="lg"
           rounded="lg"
+          minHeight={'200px'}
         >
           <Flex justifyContent={{ base: 'center', md: 'end' }} mt={-16}>
             <Image

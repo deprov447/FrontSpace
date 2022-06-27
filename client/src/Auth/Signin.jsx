@@ -13,6 +13,7 @@ import {
   useColorModeValue,
   Divider,
   Spacer,
+  FormErrorMessage,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
@@ -27,6 +28,7 @@ export default function Signin({
 }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isPassWrong, setIsPassWrong] = useState(false);
   const [userContext, setUserContext] = useContext(UserContext);
 
   const handleSubmit = () => {
@@ -56,8 +58,18 @@ export default function Signin({
             });
             closeSignin();
           }
+        })
+        .catch(err => {
+          console.log(err);
+          if (err.response.status === 401) {
+            setIsPassWrong(true);
+            console.log('wrong pass');
+          } else {
+            alert('server error');
+          }
         });
     } catch (err) {
+      console.log('eror');
       console.error(err);
     }
   };
@@ -73,7 +85,7 @@ export default function Signin({
     return () => {
       document.removeEventListener('keydown', listener);
     };
-  }, []);
+  });
 
   return (
     <Flex
@@ -91,23 +103,28 @@ export default function Signin({
         </Stack>
         <Box p={8}>
           <Stack spacing={4}>
-            <FormControl id="username">
+            <FormControl id="username" isInvalid={isPassWrong}>
               <FormLabel>Username</FormLabel>
               <Input
                 type="username"
+                errorBorderColor="red.500"
                 onChange={e => {
                   setUsername(e.target.value);
                 }}
               />
             </FormControl>
-            <FormControl id="password">
+            <FormControl id="password" isInvalid={isPassWrong}>
               <FormLabel>Password</FormLabel>
               <Input
                 type="password"
+                errorBorderColor="red.500"
                 onChange={e => {
                   setPassword(e.target.value);
                 }}
               />
+              <FormErrorMessage>
+                Password incorrect or user doesn't exist
+              </FormErrorMessage>
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -145,7 +162,6 @@ export default function Signin({
                 )}
               </Flex>
             </Stack>
-
             {showExtraOps && (
               <>
                 <Stack pt={6}>

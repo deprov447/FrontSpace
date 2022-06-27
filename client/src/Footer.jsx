@@ -2,6 +2,8 @@ import {
   Box,
   chakra,
   Container,
+  Heading,
+  Image,
   Link,
   Stack,
   Text,
@@ -44,20 +46,23 @@ export default function Footer() {
       <Container
         as={Stack}
         maxW={'6xl'}
-        py={4}
+        py={10}
         spacing={4}
         justify={'center'}
         align={'center'}
       >
-        <h2>FirstPage</h2>
+        <Image
+          src="https://raw.githubusercontent.com/deprov447/first-page/1d72955f03ddece33ecbe751723200fcd223ec1b/assets/logos/logo-text%201/vector/default-monochrome.svg?token=GHSAT0AAAAAABV3XD5AXYL4E33RQ6KBDDXSYVZI72Q"
+          height={'30px'}
+        />
         <Stack direction={'row'} spacing={6}>
           <Link as={ReactRouterLink} to="/">
             Home
           </Link>
-          <Link href={'https://github.com/deprov447/frontpage'}>
+          <Link href={'https://github.com/deprov447/frontspace'}>
             Source Code
           </Link>
-          <Link href={'mailto:deprov447+frontpage@protonmail.com'}>
+          <Link href={'mailto:deprov447+frontspace@protonmail.com'}>
             Contact
           </Link>
         </Stack>

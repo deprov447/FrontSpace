@@ -1,6 +1,7 @@
 import CategoryCard from './CategoryCard';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { Flex, useColorModeValue } from '@chakra-ui/react';
 
 const Categories = () => {
   const [categoriesArray, setCategoriesArray] = useState([]);
@@ -16,11 +17,11 @@ const Categories = () => {
   }, []);
 
   return (
-    <>
+    <Flex wrap={'wrap'} justify={'space-around'}>
       {categoriesArray.map(({ name, img, desc }) => (
         <CategoryCard name={name} img={img} desc={desc} key={name} />
       ))}
-    </>
+    </Flex>
   );
 };
 

@@ -8,7 +8,7 @@ export default function NotFound404() {
         display="inline-block"
         as="h2"
         size="2xl"
-        bgGradient="linear(to-r, teal.400, teal.600)"
+        bgGradient="linear(to-r, gray.400, gray.600)"
         backgroundClip="text"
       >
         404
@@ -22,7 +22,7 @@ export default function NotFound404() {
 
       <Button
         colorScheme="teal"
-        bgGradient="linear(to-r, teal.400, teal.500, teal.600)"
+        bgGradient="linear(to-r, gray.400, gray.500, gray.600)"
         color="white"
         variant="solid"
       >

@@ -5,6 +5,7 @@ const signout = require("./auth/logout");
 const refreshToken = require("./auth/refreshToken");
 const { signinPassword } = require("./auth/signin");
 const { signupPassword } = require("./auth/signup");
+const checkIfUsernameExist = require("./business/checkIfUsernameExist");
 const fetchCategoriesList = require("./business/fetchCategoriesList");
 const fetchPage = require("./business/fetchPage");
 const fetchTemplateForm = require("./business/fetchTemplateForm");
@@ -24,6 +25,7 @@ router
   .post("/signin/password", passport.authenticate("local"), signinPassword)
   .get("/fetchUser", verifyUser, fetchUser)
   .get("/signout", verifyUser, signout)
+  .post("/doesUserExist", checkIfUsernameExist)
   .get("/", fetchPage);
 
 module.exports = router;

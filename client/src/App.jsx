@@ -13,15 +13,28 @@ import Header from './Header';
 import Footer from './Footer';
 
 function App() {
-  const [userContext, setUserContext] = useContext(UserContext);
+  const setUserContext = useContext(UserContext)[1];
 
-  const verifyUser = useCallback(() => {
-    const token = refreshToken();
+  const verifyUser = useCallback(async () => {
+    const token = await refreshToken();
     setUserContext(prev => {
       return { ...prev, token };
     });
     setTimeout(verifyUser, 5 * 60 * 1000);
   }, [setUserContext]);
+
+  const syncLogout = useCallback(event => {
+    if (event.key === 'signout') {
+      History.push('/');
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('storage', syncLogout);
+    return () => {
+      window.removeEventListener('storage', syncLogout);
+    };
+  }, [syncLogout]);
 
   useEffect(() => {
     verifyUser();
