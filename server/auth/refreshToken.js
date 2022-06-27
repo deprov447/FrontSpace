@@ -14,7 +14,7 @@ const refreshToken = (req, res, next) => {
       );
       const userId = payload._id;
       User.findById(userId).then(
-        (user) => {
+        async (user) => {
           if (user) {
             const tokenIndex = user.refreshToken.findIndex(
               (item) => item.refreshToken === refreshToken
@@ -26,11 +26,12 @@ const refreshToken = (req, res, next) => {
               const token = getToken({ _id: userId });
               const newRefreshToken = getRefreshToken({ _id: userId });
               user.refreshToken[tokenIndex] = { refreshToken: newRefreshToken };
-              user.save((err, user) => {
+              await user.save((err, user) => {
                 if (err) {
                   res.statusCode = 500;
                   res.send(err);
                 } else {
+                  console.log("new token:", newRefreshToken);
                   res.cookie("refreshToken", newRefreshToken, COOKIE_OPTION);
                   res.send({ success: true, token });
                 }
