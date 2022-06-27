@@ -1,0 +1,15 @@
+services:
+  server:
+    build:
+      context: server
+    ports:
+      - 4000:4000
+    env_file: .env.production
+
+  client:
+    build:
+      context: client
+      args:
+        - NODE_ENV="production"
+        - REACT_APP_IMGBB_API_KEY=${IMGBB_KEY}
+    network_mode: "host"
