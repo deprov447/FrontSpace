@@ -38,6 +38,11 @@ const SocialButton = ({ children, label, href }) => {
 };
 
 export default function Footer() {
+  const logoSrc = useColorModeValue(
+    'https://raw.githubusercontent.com/deprov447/first-page/1d72955f03ddece33ecbe751723200fcd223ec1b/assets/logos/logo-text%201/vector/default-monochrome.svg',
+    'https://raw.githubusercontent.com/deprov447/frontspace/master/assets/logos/logo-text%201/vector/default-monochrome-white.svg'
+  );
+
   return (
     <Box
       bg={useColorModeValue('gray.50', 'gray.900')}
@@ -51,10 +56,7 @@ export default function Footer() {
         justify={'center'}
         align={'center'}
       >
-        <Image
-          src="https://raw.githubusercontent.com/deprov447/first-page/1d72955f03ddece33ecbe751723200fcd223ec1b/assets/logos/logo-text%201/vector/default-monochrome.svg?token=GHSAT0AAAAAABV3XD5AXYL4E33RQ6KBDDXSYVZI72Q"
-          height={'30px'}
-        />
+        <Image src={logoSrc} height={'30px'} />
         <Stack direction={'row'} spacing={6}>
           <Link as={ReactRouterLink} to="/">
             Home
