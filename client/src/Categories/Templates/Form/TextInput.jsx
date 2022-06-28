@@ -1,9 +1,9 @@
 import {
   FormControl,
-  FormLabel,
   Input,
   InputGroup,
-  useColorModeValue,
+  InputLeftAddon,
+  InputRightAddon,
 } from '@chakra-ui/react';
 
 const TextInput = ({ field, changeFormState }) => {
@@ -14,18 +14,20 @@ const TextInput = ({ field, changeFormState }) => {
   return (
     <>
       <FormControl>
-        <FormLabel
-          fontSize="sm"
-          fontWeight="md"
-          color={useColorModeValue('gray.700', 'gray.50')}
-        >
-          {field}
-        </FormLabel>
         <InputGroup size="sm">
+          <InputLeftAddon
+            hidden={!(field === 'Subdomain')}
+            children="https://"
+          />
           <Input
             focusBorderColor="brand.400"
             rounded="md"
             onChange={handleChange}
+            placeholder={field}
+          />
+          <InputRightAddon
+            hidden={!(field === 'Subdomain')}
+            children=".getfront.space"
           />
         </InputGroup>
       </FormControl>
