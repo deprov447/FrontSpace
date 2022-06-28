@@ -51,17 +51,11 @@ const Template = ({
 
             <Flex
               alignItems="center"
-              justifyContent="space-between"
+              justifyContent="center"
               py={2}
               px={3}
               bg={useColorModeValue('gray.200', 'gray.700')}
             >
-              <chakra.span
-                fontWeight="bold"
-                color={useColorModeValue('gray.800', 'gray.200')}
-              >
-                $129
-              </chakra.span>
               <a href={templatePreviewURL} target="blank">
                 <chakra.button
                   bg="gray.800"
