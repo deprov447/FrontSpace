@@ -98,7 +98,7 @@ function Hero() {
         >
           <iframe
             title="Demo video"
-            src="https://frontspace.trainn.co/share/tedHABAeMJh8g2blpGLbxA/embed?autoplay=false"
+            src="https://frontspace.trainn.co/share/yzX4g9NRYP4oJDCPRFC5pQ/embed?autoplay=false"
             frameborder="0"
             webkitallowfullscreen
             mozallowfullscreen
