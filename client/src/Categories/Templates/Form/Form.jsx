@@ -18,32 +18,27 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-  HStack,
-  IconButton,
   Input,
   InputGroup,
   InputRightElement,
+  Center,
 } from '@chakra-ui/react';
 import FormParsed from './FormParsed';
-import {
-  FaFacebook,
-  FaLinkedin,
-  FaReddit,
-  FaShare,
-  FaTwitter,
-  FaWhatsapp,
-} from 'react-icons/fa';
+import { FaShare } from 'react-icons/fa';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../../Contexts/UserContext';
 import SocialButtons from './SocialButtons';
+import { ThreeDots } from 'react-loader-spinner';
 
 export default function Component() {
   const { templateId } = useParams();
 
   const [templateFormElements, setTemplateFormElements] = useState([]);
   const [formState, setFormState] = useState({});
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const [userContext, setUserContext] = useContext(UserContext);
 
@@ -68,6 +63,7 @@ export default function Component() {
       })
       .then(res => {
         setTemplateFormElements(() => res.data.templateFormElements);
+        setIsLoading(false);
       })
       .catch(err => {
         console.error(err);
@@ -116,7 +112,16 @@ export default function Component() {
 
   return (
     <Container maxW="80vw">
-      <Box bg={useColorModeValue('gray.50', 'inherit')} p={10}>
+      {isLoading && (
+        <Center>
+          <ThreeDots ariaLabel="loading-indicator" color="gray" />
+        </Center>
+      )}
+      <Box
+        hidden={isLoading}
+        bg={useColorModeValue('gray.50', 'inherit')}
+        p={10}
+      >
         <Box>
           <SimpleGrid
             display={{ base: 'initial', md: 'grid' }}
@@ -244,6 +249,7 @@ export default function Component() {
           </SimpleGrid>
         </Box>
       </Box>
+      }
     </Container>
   );
 }

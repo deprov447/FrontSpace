@@ -1,3 +1,4 @@
+import { InputGroup, InputLeftAddon, InputRightAddon } from '@chakra-ui/react';
 import ImageInput from './ImageInput';
 import LargeText from './LargeText';
 import TextInput from './TextInput';

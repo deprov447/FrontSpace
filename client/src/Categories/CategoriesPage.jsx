@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Templates from './Templates/Templates';
 import axios from 'axios';
+import { ThreeDots } from 'react-loader-spinner';
 
 const CategoriesPage = () => {
   const { category_name } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
 
   const [templatesList, setTemplatesList] = useState([]);
   useEffect(() => {
@@ -18,6 +20,7 @@ const CategoriesPage = () => {
       })
       .then(res => {
         setTemplatesList(res.data);
+        setIsLoading(false);
       })
       .catch(err => {
         console.error(err);
@@ -30,7 +33,12 @@ const CategoriesPage = () => {
           {category_name}
         </Heading>
       </Center>
-      <Flex>
+      {isLoading && (
+        <Center>
+          <ThreeDots ariaLabel="loading-indicator" color="gray" />
+        </Center>
+      )}
+      <Flex wrap={true}>
         {templatesList.map(
           ({
             templateName,

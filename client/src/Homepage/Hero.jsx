@@ -55,26 +55,6 @@ function Hero() {
           spacing={2}
           justifyContent={{ sm: 'left', md: 'center' }}
         >
-          <Button
-            as="a"
-            colorScheme="gray"
-            display="inline-flex"
-            alignItems="center"
-            justifyContent="center"
-            w={{ base: 'full', sm: 'auto' }}
-            mb={{ base: 2, sm: 0 }}
-            size="lg"
-            cursor="pointer"
-          >
-            Watch Demo
-            <Icon boxSize={4} ml={1} viewBox="0 0 20 20" fill="currentColor">
-              <path
-                fillRule="evenodd"
-                d="M6.672 1.911a1 1 0 10-1.932.518l.259.966a1 1 0 001.932-.518l-.26-.966zM2.429 4.74a1 1 0 10-.517 1.932l.966.259a1 1 0 00.517-1.932l-.966-.26zm8.814-.569a1 1 0 00-1.415-1.414l-.707.707a1 1 0 101.415 1.415l.707-.708zm-7.071 7.072l.707-.707A1 1 0 003.465 9.12l-.708.707a1 1 0 001.415 1.415zm3.2-5.171a1 1 0 00-1.3 1.3l4 10a1 1 0 001.823.075l1.38-2.759 3.018 3.02a1 1 0 001.414-1.415l-3.019-3.02 2.76-1.379a1 1 0 00-.076-1.822l-10-4z"
-                clipRule="evenodd"
-              />
-            </Icon>
-          </Button>
           <Link to="categories">
             <Button
               as="a"
@@ -105,13 +85,34 @@ function Hero() {
         mt={20}
         textAlign="center"
       >
-        <Image
-          w="full"
-          rounded="lg"
-          shadow="2xl"
-          src="https://kutty.netlify.app/hero.jpg"
-          alt="Hellonext feedback boards software screenshot"
-        />
+        <div
+          style={{
+            position: 'relative',
+            paddingBottom: '56.25%',
+            height: 0,
+            borderRadius: 0,
+            boxShadow: '0 15px 40px rgba(63,58,79,.3)',
+            overflow: 'hidden',
+            minWidth: '320px',
+          }}
+        >
+          <iframe
+            title="Demo video"
+            src="https://frontspace.trainn.co/share/tedHABAeMJh8g2blpGLbxA/embed?autoplay=false"
+            frameborder="0"
+            webkitallowfullscreen
+            mozallowfullscreen
+            allowfullscreen
+            allow="autoplay; fullscreen"
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+            }}
+          ></iframe>
+        </div>
       </Box>
     </Box>
   );

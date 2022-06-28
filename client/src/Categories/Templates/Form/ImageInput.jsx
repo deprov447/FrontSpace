@@ -1,4 +1,6 @@
 import {
+  Alert,
+  AlertIcon,
   chakra,
   Flex,
   FormControl,
@@ -10,9 +12,14 @@ import {
   VisuallyHidden,
 } from '@chakra-ui/react';
 import axios from 'axios';
+import { useState } from 'react';
+import { ThreeDots } from 'react-loader-spinner';
 
 const ImageInput = ({ field, changeFormState }) => {
+  const [isUploading, setIsUploading] = useState(0);
+
   const handleChange = e => {
+    setIsUploading(1);
     const form = new FormData();
     form.append('image', e.target.files[0]);
     form.append('key', process.env.REACT_APP_IMGBB_API_KEY);
@@ -21,6 +28,7 @@ const ImageInput = ({ field, changeFormState }) => {
       .then(data => {
         console.log(data.data.data.url);
         changeFormState(field, data.data.data.url);
+        setIsUploading(2);
       })
       .catch(err => console.error(err));
   };
@@ -45,7 +53,13 @@ const ImageInput = ({ field, changeFormState }) => {
         borderStyle="dashed"
         rounded="md"
       >
-        <Stack spacing={1} textAlign="center">
+        {isUploading === 1 && <ThreeDots color="grey" />}
+
+        <Alert status="success" hidden={!(isUploading === 2)}>
+          <AlertIcon />
+          Image uploaded.
+        </Alert>
+        <Stack hidden={!(isUploading === 0)} spacing={1} textAlign="center">
           <Icon
             mx="auto"
             boxSize={12}
@@ -62,6 +76,7 @@ const ImageInput = ({ field, changeFormState }) => {
               strokeLinejoin="round"
             />
           </Icon>
+
           <Flex
             fontSize="sm"
             color={useColorModeValue('gray.600', 'gray.400')}
