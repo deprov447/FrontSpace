@@ -16,8 +16,13 @@ import {
   ModalOverlay,
   ModalContent,
   Image,
+  SimpleGrid,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
 } from '@chakra-ui/react';
 import { useViewportScroll } from 'framer-motion';
+import { IoIosArrowDown } from 'react-icons/io';
 import { Link as ReactRouterLink } from 'react-router-dom';
 
 import { AiOutlineMenu } from 'react-icons/ai';
@@ -62,6 +67,57 @@ export default function Header() {
   const cl = useColorModeValue('gray.800', 'white');
   const mobileNav = useDisclosure();
 
+  const Section = props => {
+    const hbg = useColorModeValue('gray.50', 'brand.400');
+    const tcl = useColorModeValue('gray.900', 'gray.50');
+    return (
+      <Link
+        m={-3}
+        p={3}
+        display="flex"
+        alignItems="start"
+        rounded="lg"
+        _hover={{ bg: hbg }}
+      >
+        <a href={props.href} target="blank">
+          <Box ml={4}>
+            <chakra.p fontSize="sm" fontWeight="700" color={tcl}>
+              {props.title}
+            </chakra.p>
+          </Box>
+        </a>
+      </Link>
+    );
+  };
+
+  const Features = props => {
+    return (
+      <React.Fragment>
+        <SimpleGrid
+          columns={props.h ? { base: 1, md: 3, lg: 5 } : 1}
+          pos="relative"
+          gap={{ base: 6, sm: 8 }}
+          px={5}
+          py={6}
+          p={{ sm: 8 }}
+        >
+          <Section
+            title="Texty Template Example"
+            href="https://deprov447.getfront.space"
+          />
+          <Section
+            title="Class Template Example"
+            href="https://prinsu-pyaara.getfront.space"
+          />
+          <Section
+            title="Funky Template Example"
+            href="https://himniz.getfront.space"
+          />
+        </SimpleGrid>
+      </React.Fragment>
+    );
+  };
+
   const MobileNavContent = (
     <VStack
       pos="absolute"
@@ -83,19 +139,6 @@ export default function Header() {
         justifySelf="self-start"
         onClick={mobileNav.onClose}
       />
-      {/* Showcase, src code, signin signup */}
-
-      <Button
-        bg={bg}
-        color="gray.500"
-        display="inline-flex"
-        alignItems="center"
-        fontSize="md"
-        _hover={{ color: cl }}
-        _focus={{ boxShadow: 'none' }}
-      >
-        Showcase
-      </Button>
       <a href="https://github.com/deprov447/frontspace">
         <Button
           bg={bg}
@@ -175,17 +218,29 @@ export default function Header() {
             </Link>
             <Flex>
               <HStack spacing="5" display={{ base: 'none', md: 'flex' }}>
-                <Button
-                  bg={bg}
-                  color="gray.500"
-                  display="inline-flex"
-                  alignItems="center"
-                  fontSize="md"
-                  _hover={{ color: cl }}
-                  _focus={{ boxShadow: 'none' }}
-                >
-                  Showcase
-                </Button>
+                <Popover>
+                  <PopoverTrigger>
+                    <Button
+                      bg={bg}
+                      color="gray.500"
+                      display="inline-flex"
+                      alignItems="center"
+                      fontSize="md"
+                      _hover={{ color: cl }}
+                      _focus={{ boxShadow: 'none' }}
+                      rightIcon={<IoIosArrowDown />}
+                    >
+                      Showcase
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    w="100vw"
+                    maxW="md"
+                    _focus={{ boxShadow: 'md' }}
+                  >
+                    <Features />
+                  </PopoverContent>
+                </Popover>
                 <a href="https://github.com/deprov447/frontspace">
                   <Button
                     bg={bg}
