@@ -236,9 +236,9 @@ export default function Signup({ closeSignup, openSignin }) {
               </Text>
             </Stack>
             <Divider orientation="horizontal" />
-            <Stack>
+            {/* <Stack>
               <ThirdPartyLogin />
-            </Stack>
+            </Stack> */}
           </Stack>
         </Box>
       </Stack>

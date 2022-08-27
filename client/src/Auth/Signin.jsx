@@ -180,9 +180,9 @@ export default function Signin({
                   </Text>
                 </Stack>
                 <Divider orientation="horizontal" />
-                <Stack>
+                {/* <Stack>
                   <ThirdPartyLogin />
-                </Stack>
+                </Stack> */}
               </>
             )}
           </Stack>
