@@ -57,12 +57,12 @@ export default function Footer() {
         align={'center'}
       >
         <Stack direction={'row'} spacing={20}>
-          <Image
+          {/* <Image
             src="https://www.linode.com/wp-content/uploads/2021/01/Linode-Logo-Black.svg"
             height={'30px'}
-          />
+          /> */}
           <Image src={logoSrc} height={'30px'} />
-          <Image src="https://imgur.com/vxCYtqp.png" height={'30px'} />
+          {/* <Image src="https://imgur.com/vxCYtqp.png" height={'30px'} /> */}
         </Stack>
         <Stack direction={'row'} spacing={6}>
           <Link as={ReactRouterLink} to="/">
