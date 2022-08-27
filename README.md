@@ -11,7 +11,6 @@ Of course love. But also a number of amazing technologies.
 - React.js
 - Chakra UI
 - Netlify
-- Framer Motion
 
 ### Back end
 
@@ -22,7 +21,7 @@ Of course love. But also a number of amazing technologies.
 
 ### Deployment
 
-- Linode
+- AWS
 - Docker
 - Docker Compose
 - Nginx
