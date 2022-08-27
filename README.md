@@ -1,8 +1,9 @@
 <img src="https://raw.githubusercontent.com/deprov447/first-page/1d72955f03ddece33ecbe751723200fcd223ec1b/assets/logos/logo-text%201/vector/default-monochrome.svg" width="500" />
 
-Front space is a platform to quickly create single paged websites and host it for the world to see. 
+Front space is a platform to quickly create single paged websites and host it for the world to see.
 
 ## Build with
+
 Of course love. But also a number of amazing technologies.
 
 ### Front end
@@ -17,7 +18,7 @@ Of course love. But also a number of amazing technologies.
 - Express app
 - Node.js
 - Passport.js
-- jsonwebtoken 
+- jsonwebtoken
 
 ### Deployment
 
@@ -49,9 +50,26 @@ Of course love. But also a number of amazing technologies.
 
 **Source code:** [https://github.com/deprov447/frontspace/](https://github.com/deprov447/frontspace/issues/new/choose)
 
-## Special thanks
+## Local servers
 
-<img src="https://www.linode.com/wp-content/uploads/2021/01/Linode-Logo-Black.svg"  width="200" />
-<img src="https://imgur.com/vxCYtqp.png"  width="200" />
+### Client
 
+- Populate `./client/.env` with following keys:
+  - `REACT_APP_SERVER_URL`
+  - `REACT_APP_CLIENT_URL`
+  - `REACT_APP_IMGBB_API_KEY`
+- `npm i`
+- `npm start`
 
+### Server
+
+- Populate `./server/.env` with following keys:
+  - `DB_ADDR`
+  - `CLIENT_URL`
+  - `JWT_SECRET`
+  - `REFRESH_TOKEN_SECRET`
+  - `COOKIE_SECRET`
+  - `SESSION_EXPIRY`
+  - `REFRESH_TOKEN_EXPIRY`
+- `npm i`
+- `npm start`
