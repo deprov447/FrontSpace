@@ -1,7 +1,37 @@
 services:
+  mongo:
+    container_name: frontspace_mongo
+    image: mongo
+    ports:
+      - 27017:27017
+  nginx:
+    build:
+      context: .
+    container_name: frontspace_nginx
+    network_mode: host
   server:
     build:
       context: server
+      network: host
+    environment:
+      - DB_ADDR=${DB}
+      - CLIENT_URL=http://localhost:3000
+      - JWT_SECRET=${JWT_SECRET}
+      - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
+      - COOKIE_SECRET=${COOKIE_SECRET}
+      - SESSION_EXPIRY=${SESSION_EXPIRY}
+      - REFRESH_TOKEN_EXPIRY=${REFRESH_TOKEN_EXPIRY}
+    container_name: frontspace_server
     ports:
       - 4000:4000
-    env_file: .env.production
+  client:
+    build:
+      context: client
+      network: host
+      args:
+        - REACT_APP_SERVER_URL=http://localhost:4000
+        - REACT_APP_CLIENT_URL=http://localhost:3000
+        - REACT_APP_IMGBB_API_KEY=${IMGBB_API_KEY}
+    container_name: frontspace_client
+    ports:
+      - 3000:3000
